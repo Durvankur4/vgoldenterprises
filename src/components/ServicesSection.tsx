@@ -4,6 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Wrench, Layers, Phone } from "lucide-react";
 import Gallery from "@/pages/Gallery";
 import { Link } from "react-router-dom";
+import img1 from "@/images/website/gym-flooring-services.jpg";
+import img2 from "@/images/website/upholstery-services.jpg";
+
 
 export const ServicesSection = () => {
   const [popupContent, setPopupContent] = useState(null);
@@ -40,7 +43,8 @@ export const ServicesSection = () => {
 
           <Card onClick={() => openPopup({
             title: 'Premium Flooring Installation',
-            img: 'src/images/website/gym-flooring-services.jpg',
+            img: img1,
+
             description: 'Professional installation of high-grade rubber flooring, interlocking tiles, and specialized surfaces for all gym zones.',
             features: [
               'Shock-absorbing rubber floors',
@@ -58,7 +62,7 @@ export const ServicesSection = () => {
             </CardHeader>
             <CardContent>
               <div className="relative h-40 mb-4 rounded-lg overflow-hidden">
-                <img src="src/images/website/gym-flooring-services.jpg" alt="Premium gym flooring installation" className="w-full h-full object-cover" />
+                <img src={img1} alt="Premium gym flooring installation" className="w-full h-full object-cover" />
               </div>
               <p className="text-gray-600 mb-4">
                 Professional installation of high-grade rubber flooring, interlocking tiles, and specialized surfaces for all gym zones.
@@ -77,7 +81,8 @@ export const ServicesSection = () => {
 
           <Card onClick={() => openPopup({
             title: 'Expert Bench Upholstery',
-            img: 'src/images/website/upholstery-services.jpg',
+            img: img2,
+
             description: 'Complete refurbishment and repair services for all types of gym benches and equipment upholstery.',
             features: [
               'Premium vinyl and leather options',
@@ -95,7 +100,7 @@ export const ServicesSection = () => {
             </CardHeader>
             <CardContent>
               <div className="relative h-40 mb-4 rounded-lg overflow-hidden">
-                <img src="src/images/website/upholstery-services.jpg" alt="Professional gym bench upholstery" className="w-full h-full object-cover" />
+                <img src={img2} alt="Professional gym bench upholstery" className="w-full h-full object-cover" />
               </div>
               <p className="text-gray-600 mb-4">
                 Complete refurbishment and repair services for all types of gym benches and equipment upholstery.

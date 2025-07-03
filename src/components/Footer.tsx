@@ -1,6 +1,6 @@
 import { Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import img1 from "@/images/website/logo.jpg"; // Import logo image directly
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="space-y-3">
             <div className="flex items-center mb-4">
               <img 
-                src="src/images/website/logo.jpg" 
+                src={img1}
                 alt="V-Gold Enterprises Logo" 
                 className="h-8 w-auto mr-3"
               />

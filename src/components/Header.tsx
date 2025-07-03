@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Phone } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import img1 from "@/images/website/logo.jpg"; // Import logo image directly
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +49,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center">
             <img
-              src="src/images/website/logo.jpg"
+              src={img1}
               alt="V-Gold Enterprises - Premium Gym Flooring Solutions"
               className="h-10 w-auto mr-3"
             />
