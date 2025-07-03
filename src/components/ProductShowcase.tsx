@@ -10,7 +10,7 @@ const ProductShowcase = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const products = [
-    {
+     {
       id: 1,
       name: "Rubber Roll Flooring",
       category: "rolls",
@@ -65,6 +65,7 @@ const ProductShowcase = () => {
       description: "Premium gym solutions including cushioned mats designed for yoga, stretching, and floor exercises."
     }
   ];
+  
 
   const categories = [
     { id: "all", name: "All Premium Solutions" },
@@ -73,11 +74,9 @@ const ProductShowcase = () => {
     { id: "mats", name: "Mats" }
   ];
 
-  const filteredProducts = filter === "all" 
-    ? products 
-    : products.filter(product => product.category === filter);
+  const filteredProducts = filter === "all" ? products : products.filter(p => p.category === filter);
 
-  const handleViewDetails = (product: any) => {
+  const handleViewDetails = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
@@ -95,8 +94,9 @@ const ProductShowcase = () => {
   };
 
   return (
-    <section id="products" className="py-16 bg-gray-50">
+    <section id="products" className="py-16 bg-gray-50 overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
@@ -110,7 +110,7 @@ const ProductShowcase = () => {
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((category) => (
+          {categories.map(category => (
             <Button
               key={category.id}
               variant={filter === category.id ? "default" : "outline"}
@@ -126,117 +126,87 @@ const ProductShowcase = () => {
           ))}
         </div>
 
-        {/* Products Grid - Mobile horizontal scroll, Desktop grid */}
+        {/* Products */}
         <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:space-y-0 space-y-0">
-          {/* Mobile: Horizontal scroll container */}
-          <div className="md:hidden overflow-x-auto pb-4">
+
+          {/* Mobile + Tablet: Horizontal Scroll */}
+          <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
             <div className="flex space-x-4 w-max">
-              {filteredProducts.map((product) => (
-                <Card 
-                  key={product.id} 
-                  className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white border-blue-200 w-72 flex-shrink-0"
-                >
+              {filteredProducts.map(product => (
+                <Card key={product.id} className="w-72 flex-shrink-0 bg-white border border-blue-200 rounded-lg shadow-sm">
                   <div className="relative overflow-hidden rounded-t-lg">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+                    <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-lg" />
                     <div className="absolute top-3 right-3">
                       <Badge className="bg-teal-600 text-white text-xs">{product.price}</Badge>
                     </div>
                   </div>
-                  
-                  <CardHeader className="pb-3">
+                  <CardHeader className="pb-2">
                     <CardTitle className="text-lg text-blue-900">{product.name}</CardTitle>
-                    <p className="text-blue-600 text-sm">{product.description}</p>
+                    <p className="text-sm text-blue-600">{product.description}</p>
                   </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    <div className="space-y-3">
-                      <div className="flex flex-wrap gap-1">
-                        {product.specs.map((spec, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs bg-blue-100 text-blue-800">
-                            {spec}
-                          </Badge>
-                        ))}
-                      </div>
-                      <Button 
-                        onClick={() => handleViewDetails(product)}
-                        className="w-full bg-blue-900 hover:bg-blue-800 text-white"
-                      >
-                        View Details
-                      </Button>
+                  <CardContent className="pt-0 pb-4">
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {product.specs.map((spec, idx) => (
+                        <Badge key={idx} className="bg-blue-100 text-blue-800 text-xs">{spec}</Badge>
+                      ))}
                     </div>
+                    <Button onClick={() => handleViewDetails(product)} className="w-full bg-blue-900 hover:bg-blue-800 text-white">
+                      View Details
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
             </div>
           </div>
 
-          {/* Desktop: Grid layout */}
-          {filteredProducts.map((product) => (
-            <Card 
-              key={product.id} 
-              className="hidden md:block group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white border-blue-200"
-            >
+          {/* Desktop Grid */}
+          {filteredProducts.map(product => (
+            <Card key={product.id} className="hidden md:block bg-white border border-blue-200 rounded-lg shadow-sm">
               <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
                 <div className="absolute top-4 right-4">
                   <Badge className="bg-teal-600 text-white">{product.price}</Badge>
                 </div>
               </div>
-              
               <CardHeader>
                 <CardTitle className="text-xl text-blue-900">{product.name}</CardTitle>
                 <p className="text-blue-600">{product.description}</p>
               </CardHeader>
-              
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    {product.specs.map((spec, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs bg-blue-100 text-blue-800">
-                        {spec}
-                      </Badge>
-                    ))}
-                  </div>
-                  <Button 
-                    onClick={() => handleViewDetails(product)}
-                    className="w-full bg-blue-900 hover:bg-blue-800 text-white"
-                  >
-                    View Details
-                  </Button>
+              <CardContent className="pb-4">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {product.specs.map((spec, idx) => (
+                    <Badge key={idx} className="bg-blue-100 text-blue-800 text-xs">{spec}</Badge>
+                  ))}
                 </div>
+                <Button onClick={() => handleViewDetails(product)} className="w-full bg-blue-900 hover:bg-blue-800 text-white">
+                  View Details
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* CTA Section */}
+        {/* Call To Action */}
         <div className="text-center mt-12">
           <Button 
-            onClick={handleGetQuote}
-            size="lg" 
-            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 text-lg font-semibold shadow-lg"
-          >
-            Get Custom Premium Solution Quote
-          </Button>
+  onClick={handleGetQuote}
+  size="lg"
+  className="bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold shadow-lg px-6 py-3 sm:px-8 sm:py-4"
+>
+  Get Custom Premium Solution Quote
+</Button>
+
         </div>
       </div>
 
-      {/* Product Details Modal */}
+      {/* Modal */}
       <ProductDetailsModal
         product={selectedProduct}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
-      </section>
-    );
-  };
+    </section>
+  );
+};
 
-  export default ProductShowcase;
+export default ProductShowcase;

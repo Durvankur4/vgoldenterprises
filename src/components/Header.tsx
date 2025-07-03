@@ -41,8 +41,8 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-blue-200 shadow-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-blue-200 shadow-sm overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-4 lg:px-8 overflow-x-hidden">
         <div className="flex justify-between items-center h-16">
 
           {/* Logo */}
@@ -60,14 +60,13 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:block" role="navigation" aria-label="Main navigation">
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-6">
               {navigation.map((item) =>
                 item.isExternal ? (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-blue-800 hover:text-teal-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-50 rounded-md relative group"
-                    aria-label={`Navigate to ${item.name} section`}
+                    className="text-blue-800 hover:text-teal-600 px-3 py-2 text-sm font-medium hover:bg-blue-50 rounded-md relative group"
                   >
                     {item.name}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
@@ -76,8 +75,7 @@ const Header = () => {
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-blue-800 hover:text-teal-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-50 rounded-md relative group"
-                    aria-label={`Navigate to ${item.name} section`}
+                    className="text-blue-800 hover:text-teal-600 px-3 py-2 text-sm font-medium hover:bg-blue-50 rounded-md relative group"
                   >
                     {item.name}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all duration-300 group-hover:w-full"></span>
@@ -92,7 +90,6 @@ const Header = () => {
             <a
               href="tel:+919421015441"
               className="flex items-center text-sm px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors font-medium shadow-sm"
-              aria-label="Call V-Gold Enterprises at +91 9421015441"
             >
               <Phone className="h-4 w-4 mr-1" />
               Call Now
@@ -101,7 +98,6 @@ const Header = () => {
               onClick={handleGetQuote}
               size="sm"
               className="bg-teal-600 hover:bg-teal-700 text-white font-semibold shadow-sm"
-              aria-label="Get free quote for gym flooring"
             >
               Free Quote
             </Button>
@@ -110,45 +106,55 @@ const Header = () => {
           {/* Mobile Menu */}
           <div className="lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-  <SheetTrigger asChild>
-    <Button variant="ghost" size="sm" aria-label="Open mobile menu">
-      <Menu className="h-6 w-6 text-blue-900" />
-    </Button>
-  </SheetTrigger>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm" aria-label="Open mobile menu">
+                  <Menu className="h-6 w-6 text-blue-900" />
+                </Button>
+              </SheetTrigger>
 
-  {/* ✅ Use 'body' prop instead of children */}
-  <SheetContent
-    side="right"
-    body={
-      <nav className="flex flex-col gap-2 mt-6">
-        {navigation.map((item) =>
-          item.isExternal ? (
-            <Link
-              key={item.name}
-              to={item.href}
-              onClick={() => setIsOpen(false)}
-              className="text-blue-800 hover:text-teal-600 px-3 py-2 text-lg font-medium transition-colors text-left"
-              aria-label={`Navigate to ${item.name} section`}
-            >
-              {item.name}
-            </Link>
-          ) : (
-            <button
-              key={item.name}
-              onClick={() => scrollToSection(item.href)}
-              className="text-blue-800 hover:text-teal-600 px-3 py-2 text-lg font-medium transition-colors text-left"
-              aria-label={`Navigate to ${item.name} section`}
-            >
-              {item.name}
-            </button>
-          )
-        )}
-      </nav>
-    }
-  />
-</Sheet>
+              <SheetContent side="right" className="bg-white w-64 max-w-full">
+                <nav className="flex flex-col gap-4 mt-8">
+                  {navigation.map((item) =>
+                    item.isExternal ? (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="text-blue-800 hover:text-teal-600 px-3 py-2 text-lg font-medium text-left"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <button
+                        key={item.name}
+                        onClick={() => scrollToSection(item.href)}
+                        className="text-blue-800 hover:text-teal-600 px-3 py-2 text-lg font-medium text-left"
+                      >
+                        {item.name}
+                      </button>
+                    )
+                  )}
 
+                  <a
+                    href="tel:+919421015441"
+                    className="mt-4 text-blue-900 flex items-center gap-2 text-base font-medium"
+                  >
+                    <Phone className="h-4 w-4" /> Call Now
+                  </a>
+                  <Button
+                    onClick={() => {
+                      handleGetQuote();
+                      setIsOpen(false);
+                    }}
+                    className="mt-2 bg-teal-600 hover:bg-teal-700 text-white"
+                  >
+                    Free Quote
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
+
         </div>
       </div>
     </header>

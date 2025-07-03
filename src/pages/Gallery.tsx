@@ -69,7 +69,7 @@ export const Gallery = () => {
                       </div>
                     </div>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden p-0">
+                  <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden p-0 bg-white">
                     <div className="relative">
                       <img
                         src={imgSrc}

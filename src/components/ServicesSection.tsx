@@ -137,31 +137,38 @@ export const ServicesSection = () => {
         </div>
 
         {popupContent && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closePopup}>
-            <div className="bg-white rounded-2xl overflow-hidden max-w-4xl w-full flex" onClick={(e) => e.stopPropagation()}>
-              <div className="relative w-1/2 group">
-                <img src={popupContent.img} alt="Popup Image" className="w-full h-full object-cover" />
-                <Link to="/gallery">
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                    <span className="text-lg font-semibold">Go to Gallery</span>
-                  </div>
-                </Link>
-              </div>
-              <div className="w-1/2 p-6">
-                <h4 className="text-2xl font-bold mb-4">{popupContent.title}</h4>
-                <p className="text-gray-700 mb-4">{popupContent.description}</p>
-                <ul className="text-sm text-gray-600 mb-4 space-y-1">
-                  {popupContent.features.map((feature, index) => (
-                    <li key={index}>• {feature}</li>
-                  ))}
-                </ul>
-                <Button onClick={() => { closePopup(); scrollToContact(); }} className="bg-yellow-600 hover:bg-yellow-700 text-black w-full">
-                  Contact Us
-                </Button>
-              </div>
-            </div>
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 sm:px-6" onClick={closePopup}>
+    <div 
+      className="bg-white rounded-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row mx-auto shadow-lg"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Image Section */}
+      <div className="relative w-full md:w-1/2 h-48 md:h-auto group">
+        <img src={popupContent.img} alt="Popup Image" className="w-full h-full object-cover" />
+        <Link to="/gallery">
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+            <span className="text-lg font-semibold">Go to Gallery</span>
           </div>
-        )}
+        </Link>
+      </div>
+
+      {/* Content Section */}
+      <div className="w-full md:w-1/2 p-4 sm:p-6">
+        <h4 className="text-xl sm:text-2xl font-bold mb-4">{popupContent.title}</h4>
+        <p className="text-gray-700 mb-4 text-sm sm:text-base">{popupContent.description}</p>
+        <ul className="text-sm text-gray-600 mb-4 space-y-1">
+          {popupContent.features.map((feature, index) => (
+            <li key={index}>• {feature}</li>
+          ))}
+        </ul>
+        <Button onClick={() => { closePopup(); scrollToContact(); }} className="bg-yellow-600 hover:bg-yellow-700 text-black w-full">
+          Contact Us
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
+
 
       </div>
     </section>
