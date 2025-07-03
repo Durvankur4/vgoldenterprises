@@ -1,75 +1,46 @@
-/**
- * Featured Projects Component
- * 
- * Displays a grid of completed gym flooring projects with images
- * 
- * Features:
- * - Responsive grid layout (1 col mobile, 2 col tablet, 3 col desktop)
- * - Hover effects with image scaling and card elevation
- * - Individual project cards with descriptions
- * - Call-to-action buttons linking to contact section
- * - Link to complete gallery page
- * 
- * Images:
- * - All images are optimized and stored in /lovable-uploads/
- * - Uses lazy loading for performance
- * - Alt tags for accessibility
- * 
- * Interactions:
- * - Smooth scroll to contact section
- * - Card hover animations
- * - Responsive design for all devices
- */
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const FeaturedProjects = () => {
-  // Project data configuration
-  // Each project includes: id, title, image path, and description
   const projects = [
     {
       id: 1,
       title: "Army Gym Installation",
-      image: "/lovable-uploads/db819b7b-b0b5-4a9a-b9d0-1e07290b2e54.png",
+      image: "src/images/website/army-gym-installation.jpg",
       description: "Complete premium gym solutions for military training facility"
     },
     {
       id: 2,
       title: "Boutique Studio Flooring",
-      image: "/lovable-uploads/2249759c-2290-4f20-8e83-b3cd4a8f2556.png",
+      image: "src/images/website/boutique-studio-flooring.jpg",
       description: "Premium gym solutions for modern boutique fitness studio"
     },
     {
       id: 3,
       title: "Functional Training Zone",
-      image: "/lovable-uploads/b43f6c0e-83d1-4054-b321-fd18638c694d.png",
+      image: "src/images/website/functional-training-zone-install.jpg",
       description: "Premium gym solutions for functional training area"
     },
     {
       id: 4,
       title: "Commercial Gym Floor",
-      image: "/lovable-uploads/bdf497ec-8c0a-4c91-85e2-ff7dc125139f.png",
+      image: "src/images/website/commercial-gym-floor-upgrade.jpg",
       description: "Large-scale premium gym solutions installation"
     },
     {
       id: 5,
       title: "Home Gym Installation",
-      image: "/lovable-uploads/cbbd563b-d9d8-4cb1-8b9e-894ce227b60a.png",
+      image: "src/images/website/home-gym-premium-installation.jpg",
       description: "Premium gym solutions for residential spaces"
     },
     {
       id: 6,
       title: "Interlocking Tiles Setup",
-      image: "/lovable-uploads/997ae27e-3025-4259-9b16-4b03eb7062c4.png",
+      image: "src/images/website/interlocking-tiles-installation-colored.jpg",
       description: "Colorful interlocking tiles for versatile training"
     }
   ];
 
-  /**
-   * Smooth scroll to contact section
-   * Used by project CTA buttons to generate leads
-   */
   const scrollToContact = () => {
     const contactSection = document.querySelector('#contact');
     if (contactSection) {
@@ -92,39 +63,51 @@ const FeaturedProjects = () => {
         </div>
 
         {/* Projects Grid */}
-        {/* Responsive: 1 column mobile, 2 columns tablet, 3 columns desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <Card key={project.id} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardContent className="p-0">
-                
-                {/* Project Image */}
+
                 <div className="relative h-48 overflow-hidden rounded-t-lg">
                   <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy" // Performance optimization
+                    loading="lazy"
                   />
                 </div>
-                
-                {/* Project Information */}
+
                 <div className="p-4">
                   <h3 className="font-bold text-lg text-blue-900 mb-2">
                     {project.title}
                   </h3>
-                  <p className="text-blue-600 text-sm mb-3">
+                  <p className="text-blue-600 text-sm mb-4">
                     {project.description}
                   </p>
-                  
-                  {/* Call-to-Action Button */}
-                  <Button 
-                    onClick={scrollToContact}
-                    size="sm" 
-                    className="w-full bg-teal-600 hover:bg-teal-700 text-white"
-                  >
-                    Get Similar Solution
-                  </Button>
+
+                  {/* Buttons Container */}
+                  <div className="flex flex-col lg:flex-row gap-2 lg:gap-4">
+                    
+                    <Button 
+                      onClick={scrollToContact}
+                      size="sm" 
+                      className="w-full lg:w-1/2 bg-teal-600 hover:bg-teal-700 text-white"
+                    >
+                      Get Similar Solution
+                    </Button>
+
+                    <a href="/gallery" className="w-full lg:w-1/2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                      >
+                        Go to Gallery
+                      </Button>
+                    </a>
+
+                  </div>
+
                 </div>
               </CardContent>
             </Card>
@@ -141,7 +124,7 @@ const FeaturedProjects = () => {
         </div>
       </div>
     </section>
-    );
-  };
-  
-  export default FeaturedProjects;
+  );
+};
+
+export default FeaturedProjects;

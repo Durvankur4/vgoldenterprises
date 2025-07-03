@@ -48,7 +48,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center">
             <img
-              src="/lovable-uploads/779d5e4a-03d1-4a98-9be0-4d064fb11fe4.png"
+              src="src/images/website/logo.jpg"
               alt="V-Gold Enterprises - Premium Gym Flooring Solutions"
               className="h-10 w-auto mr-3"
             />

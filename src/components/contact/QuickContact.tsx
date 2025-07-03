@@ -25,7 +25,9 @@ export const QuickContact = () => {
               opp. Narpatgiri Police chowk,<br />
               Somwar Peth, Pune, Maharashtra 411011
             </p>
+            <a className="text-white font-semibold" href="https://maps.app.goo.gl/NwaAgrLjXmNratVH8">View on Google Maps</a>
           </div>
+          
         </div>
         <div className="space-y-3 pt-2">
           <div className="text-yellow-400 font-semibold">

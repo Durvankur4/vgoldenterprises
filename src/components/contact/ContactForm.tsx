@@ -82,7 +82,7 @@ const ContactForm = () => {
           <div className="text-center pt-4 border-t border-gray-600">
             <p className="text-blue-200 text-sm mb-3">Follow us on social media</p>
             <a 
-              href="https://instagram.com/vgoldenterprises" 
+              href="https://instagram.com/vgold_enterprises" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 text-white font-semibold hover:text-pink-400 transition-colors"
