@@ -25,7 +25,7 @@ const ContactForm = () => {
   // 1. Go to forms.google.com
   // 2. Create a new form with fields: Name, Email, Phone, Pincode, City, Service, Message
   // 3. Copy the form URL and paste it here
-  const GOOGLE_FORM_URL = "https://forms.google.com/your-form-url-here";
+  const GOOGLE_FORM_URL = "https://forms.gle/SKwLU3dBcmVS2bY77";
 
   /**
    * Handle form submission by redirecting to Google Forms
