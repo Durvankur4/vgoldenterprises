@@ -140,7 +140,7 @@ const FeaturedProjects = () => {
                     >
                       Get Similar Solution
                     </Button>
-                    <a href="/gallery" className="w-full lg:w-1/2">
+                    <a href="@pages/Gallery.tsx" className="w-full lg:w-1/2">
                       <Button
                         variant="outline"
                         size="sm"
@@ -157,7 +157,7 @@ const FeaturedProjects = () => {
         </div>
 
         <div className="text-center mt-8">
-          <a href="/gallery">
+          <a href="@pages/Gallery.tsx">
             <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
               View Complete Gallery
             </Button>
