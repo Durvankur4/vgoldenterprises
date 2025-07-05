@@ -8,6 +8,7 @@ import img3 from "@/images/website/functional-training-zone-install.jpg";
 import img4 from "@/images/website/commercial-gym-floor-upgrade.jpg";
 import img5 from "@/images/website/home-gym-premium-installation.jpg";
 import img6 from "@/images/website/interlocking-tiles-installation-colored.jpg";
+import { Link } from "react-router-dom";
 
 const FeaturedProjects = () => {
   const projects = [
@@ -140,7 +141,8 @@ const FeaturedProjects = () => {
                     >
                       Get Similar Solution
                     </Button>
-                    <a href="@pages/Gallery.tsx" className="w-full lg:w-1/2">
+                    <Link to="/gallery" className="w-full lg:w-1/2">
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -148,7 +150,7 @@ const FeaturedProjects = () => {
                       >
                         Go to Gallery
                       </Button>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </CardContent>
@@ -157,11 +159,12 @@ const FeaturedProjects = () => {
         </div>
 
         <div className="text-center mt-8">
-          <a href="@pages/Gallery.tsx">
+          <Link to="/gallery">
+
             <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
               View Complete Gallery
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
