@@ -14,7 +14,7 @@ const ProductShowcase = () => {
       id: 1,
       name: "Rubber Roll Flooring",
       category: "rolls",
-      price: "₹329/sq ft",
+      price: "/sq ft",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Shock Absorption", "Noise Reduction", "Easy Maintenance"],
       description: "Premium gym solutions featuring professional rubber flooring perfect for weightlifting areas and cardio zones."
@@ -23,7 +23,7 @@ const ProductShowcase = () => {
       id: 2,
       name: "Interlocking Tiles",
       category: "tiles",
-      price: "₹205/sq ft",
+      price: "/sq ft",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Easy Installation", "Modular Design", "Slip-Resistant"],
       description: "Premium gym solutions with versatile interlocking tiles for custom gym layouts and easy replacement."
@@ -32,7 +32,7 @@ const ProductShowcase = () => {
       id: 3,
       name: "Competition Mats",
       category: "mats",
-      price: "₹12,499/each",
+      price: "/each",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Competition Grade", "High Density", "Non-Slip Base"],
       description: "Premium gym solutions including professional-grade mats designed for serious training and competitions."
@@ -41,7 +41,7 @@ const ProductShowcase = () => {
       id: 4,
       name: "Heavy-Duty Rolls",
       category: "rolls",
-      price: "₹499/sq ft",
+      price: "/sq ft",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Ultra Durable", "Commercial Grade", "10-Year Warranty"],
       description: "Premium gym solutions featuring heavy-duty flooring for high-traffic commercial fitness centers."
@@ -50,7 +50,7 @@ const ProductShowcase = () => {
       id: 5,
       name: "Puzzle Floor Tiles",
       category: "tiles",
-      price: "₹165/sq ft",
+      price: "/sq ft",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Quick Assembly", "Lightweight", "Color Options"],
       description: "Premium gym solutions with affordable puzzle tiles perfect for home gyms and small spaces."
@@ -59,7 +59,7 @@ const ProductShowcase = () => {
       id: 6,
       name: "Yoga & Stretching Mats",
       category: "mats",
-      price: "₹7,499/each",
+      price: "₹/each",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
       specs: ["Extra Thick", "Non-Toxic", "Easy Clean"],
       description: "Premium gym solutions including cushioned mats designed for yoga, stretching, and floor exercises."
