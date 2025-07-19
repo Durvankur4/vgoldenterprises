@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Images
+// Image imports
 import mat1 from "../images/products/crash-mat-1.jpg";
 import mat2 from "../images/products/pool-mat-1.jpg";
 import mat3 from "../images/products/custom-yoga-mat-1.jpg";
@@ -31,19 +31,24 @@ const products: Product[] = [
   { id: 7, name: "Custom Yoga Mat 2X4", category: "mats", image: mat4, description: "Durable yoga mat in custom sizes.", specs: ["durable", "custom sizes", "non-slip"] }
 ];
 
-export default function ProductShowcase(): JSX.Element {
+export default function ProductShowcase() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [showZoom, setShowZoom] = useState<boolean>(false);
+  const [zoomed, setZoomed] = useState(false);
+
+  const closeZoom = () => setZoomed(false);
 
   const openPopup = (product: Product) => setSelectedProduct(product);
   const closePopup = () => setSelectedProduct(null);
-  const openZoom = () => setShowZoom(true);
-  const closeZoom = () => setShowZoom(false);
+
+  const handleContactScroll = () => {
+    const section = document.getElementById("contact");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+    closePopup();
+  };
 
   return (
-    <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-100 relative">
+    <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-100">
       <div className="container mx-auto px-4">
-        {/* Title */}
         <div className="text-center mb-10 sm:mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4">
             Explore Our Gym Products
@@ -53,7 +58,6 @@ export default function ProductShowcase(): JSX.Element {
           </p>
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {products.map((product) => (
             <Card
@@ -66,29 +70,34 @@ export default function ProductShowcase(): JSX.Element {
               </CardHeader>
               <CardContent>
                 <div className="relative h-40 mb-4 rounded-lg overflow-hidden">
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
+                <p className="text-sm text-gray-600 mb-4">
+                  {product.description}
+                </p>
                 <ul className="text-sm text-gray-600 mb-6 space-y-1">
                   {product.specs.map((spec, index) => (
                     <li key={index}>• {spec}</li>
                   ))}
                 </ul>
                 <div className="flex gap-2">
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openPopup(product);
-                    }}
-                    className="bg-teal-600 text-white hover:bg-teal-700"
-                  >
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white" onClick={(e) => {
+                    e.stopPropagation();
+                    openPopup(product);
+                  }}>
                     View Details
                   </Button>
-                  <Link to="/contact" onClick={(e) => e.stopPropagation()}>
-                    <Button variant="ghost" className="border border-gray-300">
-                      Get Quote
-                    </Button>
-                  </Link>
+                  <Button variant="ghost" className="border" onClick={(e) => {
+                    e.stopPropagation();
+                    handleContactScroll();
+                  }}>
+                    Get Quote
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -97,70 +106,83 @@ export default function ProductShowcase(): JSX.Element {
 
         {/* Modal Popup */}
         {selectedProduct && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4"
-            onClick={closePopup}
-          >
+          <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center px-4"
+               onClick={closePopup}>
             <div
-              className="bg-white rounded-2xl overflow-hidden w-[800px] h-[500px] flex mx-auto shadow-lg"
+              className="bg-white rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-[850px] h-screen md:h-[500px]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Image Section */}
-              <div className="relative w-1/2 h-full group cursor-pointer" onClick={openZoom}>
-                <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
+              {/* Image */}
+              <div className="relative w-full md:w-1/2 h-64 md:h-full group cursor-pointer" onClick={() => setZoomed(true)}>
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 flex items-center justify-center text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-all">
                   View Image
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="w-1/2 flex flex-col justify-between p-6 overflow-y-auto">
+              {/* Details */}
+              <div className="w-full md:w-1/2 flex flex-col justify-between p-6 md:overflow-y-auto">
                 <div>
-                  <h4 className="text-2xl font-bold text-black mb-4">{selectedProduct.name}</h4>
-                  <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
-                  <ul className="text-sm text-gray-600 mb-4 space-y-1">
-                    {selectedProduct.specs.map((feature, index) => (
-                      <li key={index}>• {feature}</li>
+                  <h4 className="text-2xl font-bold mb-4">{selectedProduct.name}</h4>
+                  <p className="text-gray-700 mb-4 text-sm sm:text-base">{selectedProduct.description}</p>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    {selectedProduct.specs.map((spec, index) => (
+                      <li key={index}>• {spec}</li>
                     ))}
                   </ul>
                 </div>
-
-                <div className="flex gap-4 mt-auto pt-4">
-                  <Button onClick={closePopup} className="bg-teal-600 text-white hover:bg-teal-700 w-full">
+                <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                  <Button onClick={closePopup} className="bg-teal-600 text-white hover:bg-teal-700 w-full sm:w-auto">
                     Close
                   </Button>
-                  <Link to="/contact" className="w-full">
-                    <Button className="w-full bg-black text-white hover:bg-gray-900">
-                      Get Quote
-                    </Button>
-                  </Link>
+                  <Button
+                    className="bg-black text-white w-full sm:w-auto hover:bg-gray-900"
+                    onClick={handleContactScroll}
+                  >
+                    Get Quote
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Zoom Modal */}
-        {showZoom && selectedProduct && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center"
-            onClick={closeZoom}
-          >
-            <div className="relative max-w-4xl w-full px-6" onClick={(e) => e.stopPropagation()}>
-              <button
-                onClick={closeZoom}
-                className="absolute top-4 right-4 text-white text-3xl z-50"
-              >
-                &times;
-              </button>
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                className="w-full h-auto object-contain rounded-lg"
-              />
-            </div>
-          </div>
-        )}
+        {/* Zoom Image Fullscreen */}
+        {zoomed && selectedProduct && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-80 z-[100] flex items-center justify-center p-4"
+    onClick={closeZoom}
+  >
+    <div className="relative w-auto max-h-[80vh]" onClick={(e) => e.stopPropagation()}>
+      
+      {/* Close (X) Button */}
+      <button
+        onClick={closeZoom}
+        className="absolute top-3 right-3 text-white text-2xl z-10 p-1 bg-black bg-opacity-50 rounded-full"
+      >
+        &times;
+      </button>
+      
+      {/* Zoomed Image */}
+      <img
+        src={selectedProduct.image}
+        alt={selectedProduct.name}
+        className="max-h-[80vh] w-auto object-contain rounded-lg"
+      />
+
+      {/* Title below image */}
+      <h4 className="text-white text-center text-xl font-semibold mt-4">
+        {selectedProduct.name}
+      </h4>
+    </div>
+  </div>
+)}
+
       </div>
     </section>
   );
