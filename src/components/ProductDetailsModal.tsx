@@ -1,55 +1,46 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-const ProductDetailsModal = ({ isOpen, onClose, product }) => {
-  const [isZoomOpen, setZoomOpen] = useState(false);
+export default function ProductDetailsModal({ isOpen, onClose, product }) {
+  const [zoom, setZoom] = useState(false);
+
+  if (!product) return null;
 
   return (
     <>
+      {/* Main Detail Modal (image + info) */}
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-3xl w-full">
+        <DialogContent className="max-w-3xl w-full p-6">
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 cursor-zoom-in" onClick={() => setZoomOpen(true)}>
+            <div className="flex-1 cursor-zoom-in" onClick={() => setZoom(true)}>
               <img
                 src={product.image}
                 alt={product.name}
-                className="rounded-lg w-full h-64 object-contain bg-white p-4"
+                className="w-full h-64 object-contain rounded-lg"
               />
             </div>
             <div className="flex-1 space-y-4">
-              <h2 className="text-xl font-bold">{product.name}</h2>
-              <p className="text-gray-600">{product.description}</p>
-
-              <div className="flex flex-wrap gap-2 mt-4">
-                {product.specs.map((spec, i) => (
-                  <span key={i} className="bg-gray-100 px-3 py-1 rounded-full text-sm">
-                    {spec}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-2 mt-6">
-                <Button variant="default">Get Quote</Button>
-                <Button variant="outline">Contact Us</Button>
+              <h3 className="text-2xl font-bold">{product.name}</h3>
+              <p className="text-gray-700">{product.description}</p>
+              <div className="mt-6 flex gap-4">
+                <button className="btn btn-default">Get Quote</button>
+                <button className="btn btn-outline">Contact Us</button>
               </div>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Zoomable Image View */}
-      <Dialog open={isZoomOpen} onOpenChange={setZoomOpen}>
-        <DialogContent className="w-full max-w-5xl p-4 bg-black">
+      {/* Zoom Lightbox Modal */}
+      <Dialog open={zoom} onOpenChange={setZoom}>
+        <DialogContent className="max-w-4xl w-full p-0 bg-black">
           <img
             src={product.image}
-            alt="Zoomed"
-            className="w-full h-auto object-contain mx-auto"
+            alt={product.name}
+            className="w-full h-auto object-contain"
           />
         </DialogContent>
       </Dialog>
     </>
   );
-};
-
-export default ProductDetailsModal;
+}

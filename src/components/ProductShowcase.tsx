@@ -1,12 +1,7 @@
+// ProductShowcase.jsx
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProductDetailsModal from "./ProductDetailsModal";
 
 // Images
@@ -18,157 +13,71 @@ import tile1 from "../images/products/tile-1.jpg";
 import roll1 from "../images/products/rubber-roll-tile-2.jpg";
 import roller1 from "../images/products/roller-1.webp";
 
-const ProductShowcase = () => {
+const products = [
+  { id: 1, name: "Gym Foam Roller", category: "rolls", image: roller1, description: "High-quality rubber roller for comfort and durability." },
+  { id: 2, name: "Rubber Roll Tile", category: "rolls", image: roll1, description: "Heavy-duty anti-slip roll tile for gym and industrial flooring." },
+  { id: 3, name: "Custom Yoga Mat 2X6", category: "mats", image: mat3, description: "Eco-friendly non-slip yoga mat with custom prints." },
+  { id: 4, name: "Crash Mat", category: "mats", image: mat1, description: "High-density crash mat for functional training and gymnastics." },
+  { id: 5, name: "Poolside Mat", category: "mats", image: mat2, description: "Waterproof anti-fungal mat for wet areas." },
+  { id: 6, name: "Interlock Tile Mat", category: "tiles", image: tile1, description: "Easy-install interlocking tiles in custom colors." },
+  { id: 7, name: "Custom Yoga Mat 2X4", category: "mats", image: mat4, description: "Durable yoga mat in custom sizes." }
+];
+
+export default function ProductShowcase() {
   const [filter, setFilter] = useState("all");
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleViewDetails = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+  const filtered = filter === "all" ? products : products.filter(p => p.category === filter);
+
+  const open = product => {
+    setSelected(product);
+    setIsOpen(true);
   };
-
-  const handleCloseModal = () => {
-    setSelectedProduct(null);
-    setIsModalOpen(false);
-  };
-
-  const products = [
-    {
-      id: 1,
-      name: "Gym Foam Roller",
-      category: "rolls",
-      price: "/each",
-      image: roller1,
-      specs: ["Comfortable", "Custom Thickness", "Easy Maintenance"],
-      description:
-        "High-quality rubber roller designed for comfort and durability, perfect for various gym applications."
-    },
-    {
-      id: 2,
-      name: "Rubber Roll Tile – Heavy Duty Flooring",
-      category: "rolls",
-      price: "/each",
-      image: roll1,
-      specs: ["Sound insulation", "Impact protection"],
-      description:
-        "Heavy-duty black rubber roll tile with anti-slip surface, ideal for gym and industrial flooring."
-    },
-    {
-      id: 3,
-      name: "Custom Yoga Mat 2X6",
-      category: "mats",
-      price: "/each",
-      image: mat3,
-      specs: ["Eco-friendly", "Non-slip", "Custom print"],
-      description:
-        "High-quality yoga mat made with eco-friendly materials, available in customizable prints and sizes."
-    },
-    {
-      id: 4,
-      name: "Crash Mat",
-      category: "mats",
-      price: "/each",
-      image: mat1,
-      specs: ["High density foam", "Shock absorption"],
-      description:
-        "Crash mats perfect for functional training zones, gymnastics or high-impact workouts."
-    },
-    {
-      id: 5,
-      name: "Poolside Mat",
-      category: "mats",
-      price: "/each",
-      image: mat2,
-      specs: ["Waterproof", "Anti-fungal", "Non-slip"],
-      description:
-        "Durable poolside mats with water-resistant and anti-fungal features, suitable for wet areas."
-    },
-    {
-      id: 6,
-      name: "Interlock Tile Mat",
-      category: "tiles",
-      price: "/sqft",
-      image: tile1,
-      specs: ["Easy to install", "Shock resistant", "Custom color options"],
-      description:
-        "Interlocking gym tiles offering easy installation, available in custom colors and textures."
-    },
-    {
-      id: 7,
-      name: "Custom Yoga Mat 2X4",
-      category: "mats",
-      price: "/each",
-      image: mat4,
-      specs: ["Eco-friendly", "Non-slip", "Custom Material"],
-      description:
-        "High-quality yoga mat made with durable materials, available in customizable sizes."
-    }
-  ];
-
-  const filteredProducts =
-    filter === "all"
-      ? products
-      : products.filter((product) => product.category === filter);
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="mb-6 flex flex-wrap gap-3 justify-center">
-        {["all", "rolls", "mats", "tiles"].map((cat) => (
+    <div className="px-6 py-8">
+      <div className="flex justify-center gap-4 mb-8">
+        {["all","rolls","mats","tiles"].map(cat => (
           <Button
             key={cat}
             variant={filter === cat ? "default" : "outline"}
             onClick={() => setFilter(cat)}
-          >
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
-          </Button>
+          >{cat.charAt(0).toUpperCase() + cat.slice(1)}</Button>
         ))}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => (
-          <Card key={product.id} className="hover:shadow-lg transition">
-            <button
-              onClick={() => handleViewDetails(product)}
-              className="overflow-hidden rounded-t-xl bg-white"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-contain p-4 transition duration-300"
-              />
-            </button>
+        {filtered.map(prod => (
+          <Card
+            key={prod.id}
+            className="cursor-pointer hover:shadow-xl transition p-0"
+            onClick={() => open(prod)}
+          >
+            <div className="flex justify-center bg-white p-4 rounded-t-lg">
+              <img src={prod.image} alt={prod.name} className="h-40 object-contain" />
+            </div>
             <CardHeader>
-              <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
+              <CardTitle className="text-center text-lg font-medium">
+                {prod.name}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <Badge variant="secondary" className="mb-2 capitalize">
-                {product.category}
-              </Badge>
-              <p className="text-sm text-muted-foreground mb-2">
-                {product.description}
+            <CardContent className="text-center">
+              <p className="text-sm text-muted-foreground">
+                {prod.description}
               </p>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleViewDetails(product)}
-              >
-                View Details
-              </Button>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {selectedProduct && (
+      {selected && (
         <ProductDetailsModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          product={selectedProduct}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          product={selected}
         />
       )}
     </div>
   );
-};
-
-export default ProductShowcase;
+}
