@@ -159,21 +159,22 @@ export default function ProductShowcase() {
         >
           {/* Arrows */}
           {currentIndex > 0 && (
-            <button
-              onClick={e => { e.stopPropagation(); goPrev(); }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full shadow text-teal-600 hover:bg-teal-600 hover:text-white"
-            >
-              <MdArrowBackIosNew size={22} />
-            </button>
-          )}
-          {currentIndex < filteredProducts.length - 1 && (
-            <button
-              onClick={e => { e.stopPropagation(); goNext(); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full shadow text-teal-600 hover:bg-teal-600 hover:text-white"
-            >
-              <MdArrowForwardIos size={22} />
-            </button>
-          )}
+  <button
+    onClick={e => { e.stopPropagation(); goPrev(); }}
+    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 transform bg-white rounded-full shadow text-teal-600 hover:bg-teal-600 hover:text-white z-50 w-10 h-10 flex items-center justify-center"
+  >
+    <MdArrowBackIosNew size={20} />
+  </button>
+)}
+{currentIndex < filteredProducts.length - 1 && (
+  <button
+    onClick={e => { e.stopPropagation(); goNext(); }}
+    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 transform bg-white rounded-full shadow text-teal-600 hover:bg-teal-600 hover:text-white z-50 w-10 h-10 flex items-center justify-center"
+  >
+    <MdArrowForwardIos size={20} />
+  </button>
+)}
+
 
           {/* Modal box */}
           <div onClick={e => e.stopPropagation()} className="bg-white rounded-xl shadow-xl max-w-[90vw] w-full md:w-[800px] max-h-[90vh] flex flex-col md:flex-row overflow-hidden relative">
