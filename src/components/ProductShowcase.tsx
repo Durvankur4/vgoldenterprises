@@ -1,4 +1,3 @@
-// ProductShowcase.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,17 @@ import tile1 from "../images/products/tile-1.jpg";
 import roll1 from "../images/products/rubber-roll-tile-2.jpg";
 import roller1 from "../images/products/roller-1.webp";
 
-const products = [
+// Product type definition
+export interface Product {
+  id: number;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  specs: string[];
+}
+
+const products: Product[] = [
   { id: 1, name: "Gym Foam Roller", category: "rolls", image: roller1, description: "High-quality rubber roller for comfort and durability.", specs: ["comfortable", "custom thickness", "easy maintenance"] },
   { id: 2, name: "Rubber Roll Tile", category: "rolls", image: roll1, description: "Heavy-duty anti-slip roll tile for gym and industrial flooring.", specs: ["sound insulation", "impact protection", "multi-thickness"] },
   { id: 3, name: "Custom Yoga Mat 2X6", category: "mats", image: mat3, description: "Eco-friendly non-slip yoga mat with custom prints.", specs: ["eco-friendly", "non-slip", "printable"] },
@@ -25,21 +34,21 @@ const products = [
   { id: 7, name: "Custom Yoga Mat 2X4", category: "mats", image: mat4, description: "Durable yoga mat in custom sizes.", specs: ["durable", "custom sizes", "non-slip"] }
 ];
 
-export default function ProductShowcase() {
-  const [filter, setFilter] = useState("all");
-  const [selected, setSelected] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+export default function ProductShowcase(): JSX.Element {
+  const [filter, setFilter] = useState<string>("all");
+  const [selected, setSelected] = useState<Product | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const filtered = filter === "all" ? products : products.filter(p => p.category === filter);
+  const filtered: Product[] = filter === "all" ? products : products.filter(p => p.category === filter);
 
-  const openModal = (product) => {
+  const openModal = (product: Product) => {
     setSelected(product);
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    setTimeout(() => setSelected(null), 300); // optional: delay to allow animation
+    setTimeout(() => setSelected(null), 300);
   };
 
   return (
@@ -169,7 +178,7 @@ export default function ProductShowcase() {
         </div>
       </div>
 
-      {/* Modal is always rendered; visibility controlled by `isOpen` */}
+      {/* Modal always rendered; controlled by isOpen */}
       <ProductDetailsModal
         isOpen={isOpen}
         onClose={closeModal}
