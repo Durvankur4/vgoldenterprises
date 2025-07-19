@@ -9,7 +9,7 @@ import img3 from "@/images/website/functional-training-zone-install.jpg";
 import img4 from "@/images/website/commercial-gym-floor-upgrade.jpg";
 import img5 from "@/images/website/home-gym-premium-installation.jpg";
 import img6 from "@/images/website/interlocking-tiles-installation-colored.jpg";
-import img7 from "@/images/website/epdm-site-1.jpg";
+import img7 from "@/images/website/playground-EPDM-flooring.jpg";
 
 const projects = [
   {
