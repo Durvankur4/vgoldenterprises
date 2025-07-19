@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import ProductDetailsModal from "./ProductDetailsModal";
 
 import mat1 from "../images/products/crash-mat-1.jpg";
-import mat2 from "../images/products/pool-mat-2.jpg";
+import mat2 from "../images/products/pool-mat-1.jpg";
 import mat3 from "../images/products/custom-yoga-mat-1.png";
 import mat4 from "../images/products/custom-yoga-mat-2.jpg";
 import tile1 from "../images/products/tile-1.jpg";
