@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ProductDetailsModal from "./ProductDetailsModal";
 
-const mat1 = "./images/products/crash-mat-1.jpg";
-const mat2 = "./images/products/pool-mat-2.jpg";
-const tile1 = "./images/products/tile-1.jpg";
+import mat1 from "./images/products/crash-mat-1.jpg";
+import mat2 from "./images/products/pool-mat-2.jpg";
+import tile1 from "./images/products/tile-1.jpg";
 
 const ProductShowcase = () => {
   const [filter, setFilter] = useState("all");
