@@ -37,24 +37,31 @@ export default function ProductShowcase() {
     setIsOpen(true);
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+    setTimeout(() => setSelected(null), 300); // optional: delay to allow animation
+  };
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-center gap-4 mb-8">
-          { ["all","rolls","mats","tiles"].map(cat => (
+          {["all", "rolls", "mats", "tiles"].map(cat => (
             <Button
               key={cat}
               variant={filter === cat ? "default" : "outline"}
               className="capitalize transition-transform hover:scale-105"
               onClick={() => setFilter(cat)}
-            >{cat}</Button>
-          )) }
+            >
+              {cat}
+            </Button>
+          ))}
         </div>
 
         {/* Mobile Carousel */}
         <div className="block lg:hidden overflow-x-auto -mx-4 px-4 pb-4">
           <div className="flex space-x-6 w-max">
-            { filtered.map(prod => (
+            {filtered.map(prod => (
               <Card
                 key={prod.id}
                 className="min-w-[260px] max-w-[260px] flex-shrink-0 group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
@@ -73,21 +80,24 @@ export default function ProductShowcase() {
                     <h3 className="font-semibold text-lg text-blue-900 mb-2">{prod.name}</h3>
                     <p className="text-blue-600 text-sm mb-4">{prod.description}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
-                      { prod.specs.map((s,i) => (
+                      {prod.specs.map((s, i) => (
                         <Badge key={i} variant="outline" className="capitalize">
                           {s}
                         </Badge>
-                      )) }
+                      ))}
                     </div>
                     <div className="flex flex-col gap-2">
                       <Button
-                        onClick={(e) => { e.stopPropagation(); openModal(prod); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openModal(prod);
+                        }}
                         size="sm"
                         className="bg-teal-600 hover:bg-teal-700 text-white w-full"
                       >
                         View Details
                       </Button>
-                      <Link to="/contact" onClick={e => e.stopPropagation()}>
+                      <Link to="/contact" onClick={(e) => e.stopPropagation()}>
                         <Button
                           variant="outline"
                           size="sm"
@@ -100,13 +110,13 @@ export default function ProductShowcase() {
                   </div>
                 </CardContent>
               </Card>
-            )) }
+            ))}
           </div>
         </div>
 
         {/* Desktop Grid */}
         <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          { filtered.map(prod => (
+          {filtered.map(prod => (
             <Card
               key={prod.id}
               className="group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
@@ -125,21 +135,24 @@ export default function ProductShowcase() {
                   <h3 className="font-semibold text-xl text-blue-900 mb-2">{prod.name}</h3>
                   <p className="text-blue-600 text-sm mb-4">{prod.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    { prod.specs.map((s,i) => (
+                    {prod.specs.map((s, i) => (
                       <Badge key={i} variant="outline" className="capitalize">
                         {s}
                       </Badge>
-                    )) }
+                    ))}
                   </div>
                   <div className="flex flex-col lg:flex-row gap-3">
                     <Button
-                      onClick={(e) => { e.stopPropagation(); openModal(prod); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(prod);
+                      }}
                       size="sm"
                       className="w-full lg:w-1/2 bg-teal-600 hover:bg-teal-700 text-white"
                     >
                       View Details
                     </Button>
-                    <Link to="/contact" onClick={e => e.stopPropagation()} className="w-full lg:w-1/2">
+                    <Link to="/contact" onClick={(e) => e.stopPropagation()} className="w-full lg:w-1/2">
                       <Button
                         variant="outline"
                         size="sm"
@@ -152,18 +165,16 @@ export default function ProductShowcase() {
                 </div>
               </CardContent>
             </Card>
-          )) }
+          ))}
         </div>
       </div>
 
-      {/* Modal */}
-      { selected && (
-        <ProductDetailsModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          product={selected}
-        />
-      ) }
+      {/* Modal is always rendered; visibility controlled by `isOpen` */}
+      <ProductDetailsModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        product={selected}
+      />
     </section>
   );
 }
