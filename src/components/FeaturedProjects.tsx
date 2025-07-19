@@ -8,6 +8,7 @@ import img3 from "@/images/website/functional-training-zone-install.jpg";
 import img4 from "@/images/website/commercial-gym-floor-upgrade.jpg";
 import img5 from "@/images/website/home-gym-premium-installation.jpg";
 import img6 from "@/images/website/interlocking-tiles-installation-colored.jpg";
+import img7 from "@/images/website/epdm-site-1.jpg";
 import { Link } from "react-router-dom";
 
 const FeaturedProjects = () => {
@@ -28,7 +29,7 @@ const FeaturedProjects = () => {
       id: 3,
       title: "Functional Training Zone",
       image: img3,
-      description: "Premium gym solutions for functional training area",
+      description: "Premium gym solutions for functional training arsea",
     },
     {
       id: 4,
@@ -47,6 +48,12 @@ const FeaturedProjects = () => {
       title: "Interlocking Tiles Setup",
       image: img6,
       description: "Colorful interlocking tiles for versatile training",
+    },
+    {
+      id: 7,
+      title: "EPDM Flooring Installation",
+      image: img7,
+      description: "High-quality EPDM flooring for outdoor playground areas",
     },
   ];
 
