@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Images
+// Images (adjust paths if needed)
 import mat1 from "../images/products/crash-mat-1.jpg";
 import mat2 from "../images/products/pool-mat-1.jpg";
 import mat3 from "../images/products/custom-yoga-mat-1.jpg";
@@ -37,13 +37,28 @@ const categories = [
   { key: "rolls", label: "Rolls" }
 ];
 
+// Helper to get the index of a product
+const getIndexById = (id: number, list: Product[]) => list.findIndex((p) => p.id === id);
+
 export default function ProductShowcase(): JSX.Element {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [zoomed, setZoomed] = useState(false);
   const [filter, setFilter] = useState<string>("all");
 
   const filteredProducts =
-    filter === "all" ? products : products.filter(p => p.category === filter);
+    filter === "all" ? products : products.filter((p) => p.category === filter);
+
+  const currentIndex = selectedProduct
+    ? getIndexById(selectedProduct.id, filteredProducts)
+    : -1;
+
+  // Next/Prev navigation
+  const goPrev = () => {
+    if (currentIndex > 0) setSelectedProduct(filteredProducts[currentIndex - 1]);
+  };
+  const goNext = () => {
+    if (currentIndex < filteredProducts.length - 1) setSelectedProduct(filteredProducts[currentIndex + 1]);
+  };
 
   const handleContactScroll = () => {
     const el = document.getElementById("contact");
@@ -54,10 +69,9 @@ export default function ProductShowcase(): JSX.Element {
   return (
     <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-100">
       <div className="container mx-auto px-4">
-        
         {/* FILTER */}
         <div className="flex justify-center gap-2 mb-8">
-          {categories.map(cat => (
+          {categories.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setFilter(cat.key)}
@@ -71,7 +85,6 @@ export default function ProductShowcase(): JSX.Element {
             </button>
           ))}
         </div>
-
         {/* Title */}
         <div className="text-center mb-6 sm:mb-10">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-3">
@@ -81,21 +94,66 @@ export default function ProductShowcase(): JSX.Element {
             High-performance flooring, mats, and accessories tailored to every workout space.
           </p>
         </div>
-
-        {/* Card List - Horizontal Scroll on Mobile */}
-        <div className="overflow-x-auto -mx-4 px-4 pb-4">
-          <div className="flex gap-4 w-max px-1">
-            {filteredProducts.map(product => (
+        {/* Product Grid/Carousel */}
+        {/* Mobile: horizontal scroll, snap. Desktop: grid */}
+        <div>
+          <div className="block md:hidden -mx-4 px-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
+               style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }}>
+            <div className="flex gap-5 w-max">
+              {filteredProducts.map((product) => (
+                <Card
+                  key={product.id}
+                  onClick={() => setSelectedProduct(product)}
+                  className="min-w-[80vw] max-w-xs bg-white rounded-xl border border-gray-200 hover:shadow-lg transition cursor-pointer snap-center"
+                  style={{ scrollSnapAlign: 'center'}}
+                >
+                  <div className="overflow-hidden rounded-t-xl">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-44 object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="text-lg font-semibold text-black mb-2">{product.name}</h3>
+                    <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {product.specs.map((s, i) => (
+                        <span
+                          key={i}
+                          className="bg-teal-600 text-white text-xs px-2 py-1 rounded"
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProduct(product);
+                      }}
+                      className="bg-teal-600 hover:bg-teal-700 text-white w-full"
+                    >
+                      View Details
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+          <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+            {filteredProducts.map((product) => (
               <Card
                 key={product.id}
                 onClick={() => setSelectedProduct(product)}
-                className="min-w-[85vw] sm:min-w-[300px] max-w-xs bg-white rounded-xl border border-gray-200 hover:shadow-lg transition cursor-pointer"
+                className="w-full bg-white rounded-xl border border-gray-200 hover:shadow-lg transition cursor-pointer"
               >
                 <div className="overflow-hidden rounded-t-xl">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-44 sm:h-52 object-cover"
+                    className="w-full h-52 object-cover"
                     loading="lazy"
                   />
                 </div>
@@ -126,18 +184,42 @@ export default function ProductShowcase(): JSX.Element {
             ))}
           </div>
         </div>
-
-        {/* MODAL POPUP */}
+        {/* Modal Pop-up */}
         {selectedProduct && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-2"
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-1"
             onClick={() => setSelectedProduct(null)}
           >
-            <div
-              className="relative bg-white w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-[60%] h-auto rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row"
-              onClick={(e) => e.stopPropagation()}
+            {/* Left Arrow */}
+            <button
+              className="hidden md:flex absolute left-[2vw] top-1/2 -translate-y-1/2 items-center justify-center h-12 w-12 bg-white bg-opacity-60 hover:bg-teal-600 hover:text-white text-3xl text-gray-700 rounded-full shadow-lg z-50 transition-all border border-gray-200"
+              style={{ outline: 'none', boxShadow: '0 1px 8px rgba(0,0,0,0.12)' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                goPrev();
+              }}
+              disabled={currentIndex <= 0}
+              aria-label="Previous Product"
             >
-              {/* 'X' Close Button */}
+              <span>‹</span>
+            </button>
+            {/* Right Arrow */}
+            <button
+              className="hidden md:flex absolute right-[2vw] top-1/2 -translate-y-1/2 items-center justify-center h-12 w-12 bg-white bg-opacity-60 hover:bg-teal-600 hover:text-white text-3xl text-gray-700 rounded-full shadow-lg z-50 transition-all border border-gray-200"
+              style={{ outline: 'none', boxShadow: '0 1px 8px rgba(0,0,0,0.12)' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                goNext();
+              }}
+              disabled={currentIndex >= filteredProducts.length - 1}
+              aria-label="Next Product"
+            >
+              <span>›</span>
+            </button>
+            <div
+              className="relative w-full max-w-md sm:max-w-2xl md:max-w-[60vw] lg:max-w-[45vw] bg-white h-auto max-h-[90vh] rounded-lg shadow-lg mx-auto flex flex-col md:flex-row overflow-hidden"
+              onClick={e => e.stopPropagation()}
+            >
               <button
                 onClick={() => setSelectedProduct(null)}
                 className="absolute top-3 right-3 text-gray-700 hover:text-black text-2xl z-10 bg-white bg-opacity-80 rounded-full p-1 shadow"
@@ -145,23 +227,23 @@ export default function ProductShowcase(): JSX.Element {
               >
                 &times;
               </button>
-
               {/* Image */}
               <div
-                className="relative group w-full md:w-1/2 h-56 md:h-full cursor-pointer bg-black"
+                className="relative group w-full md:w-1/2 h-56 md:h-auto cursor-pointer bg-black flex items-center justify-center"
+                style={{ minHeight: '240px', maxHeight: '440px'}}
                 onClick={() => setZoomed(true)}
               >
                 <img
                   src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full h-full object-contain md:object-cover"
+                  className="w-full h-full md:h-[430px] object-contain md:object-cover"
                   loading="lazy"
+                  style={{ background: '#eee', maxHeight: 440, borderRadius: '0.75rem 0.75rem 0 0' }}
                 />
-                <div className="absolute inset-0 group-hover:bg-black group-hover:bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition">
-                  <span className="text-sm font-medium">View Image</span>
+                <div className="absolute inset-0 group-hover:bg-black group-hover:bg-opacity-40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition">
+                  <span className="text-base font-medium">View Image</span>
                 </div>
               </div>
-
               {/* Details */}
               <div className="w-full md:w-1/2 p-5 flex flex-col justify-between">
                 <div>
@@ -183,20 +265,19 @@ export default function ProductShowcase(): JSX.Element {
             </div>
           </div>
         )}
-
-        {/* Zoomed Image Popup */}
+        {/* Zoomed Image */}
         {zoomed && selectedProduct && (
           <div
             className="fixed inset-0 bg-black bg-opacity-90 z-[100] flex items-center justify-center p-4"
             onClick={() => setZoomed(false)}
           >
             <div
-              className="relative w-auto max-h-[90vh] flex flex-col items-center"
+              className="relative w-auto max-h-[95vh] flex flex-col items-center"
               onClick={e => e.stopPropagation()}
             >
               <button
                 onClick={() => setZoomed(false)}
-                className="absolute top-3 right-3 text-white text-2xl bg-black bg-opacity-70 rounded-full h-9 w-9 flex items-center justify-center"
+                className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-60 rounded-full h-11 w-11 flex items-center justify-center"
                 aria-label="Close Zoom"
               >
                 &times;
@@ -217,3 +298,8 @@ export default function ProductShowcase(): JSX.Element {
     </section>
   );
 }
+
+// Hide scrollbars utility (Tailwind: scrollbar-hide)
+// Add this to your global CSS if not using a utility plugin
+// .scrollbar-hide::-webkit-scrollbar { display: none; }
+// .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

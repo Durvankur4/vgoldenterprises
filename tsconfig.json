@@ -2,6 +2,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "baseUrl": ".",
+        "lib": ["dom", "es2015", "esnext"],
     "paths": {
       "@/*": ["./src/*"],
       "@images/*": ["./src/images/*"]
