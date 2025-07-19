@@ -4,9 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ProductDetailsModal from "./ProductDetailsModal";
 
-import mat1 from "./images/products/crash-mat-1.jpg";
-import mat2 from "./images/products/pool-mat-2.jpg";
-import tile1 from "./images/products/tile-1.jpg";
+import mat1 from "../images/products/crash-mat-1.jpg";
+import mat2 from "../images/products/pool-mat-2.jpg";
+import mat3 from "../images/products/custom-yoga-mat-1.png";
+import mat4 from "../images/products/custom-yoga-mat-2.jpg";
+import tile1 from "../images/products/tile-1.jpg";
+import roll1 from "../images/products/rubber-roll-tile-2.jpg";
+import roller1 from "../images/products/roller-1.webp";
+
 
 const ProductShowcase = () => {
   const [filter, setFilter] = useState("all");
@@ -18,40 +23,40 @@ const ProductShowcase = () => {
   const products = [
      {
       id: 1,
-      name: "Rubber Roll Flooring",
+      name: "Gym Foam Roller",
       category: "rolls",
-      price: "/sq ft",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Shock Absorption", "Noise Reduction", "Easy Maintenance"],
-      description: "Premium gym solutions featuring professional rubber flooring perfect for weightlifting areas and cardio zones."
+      price: "/each",
+      image: roller1,
+      specs: ["Comfortable", "Custom Thickness", "Easy Maintenance"],
+      description: "High-quality rubber roller designed for comfort and durability, perfect for various gym applications."
     },
     {
       id: 2,
-      name: "Interlocking Tiles",
-      category: "tiles",
-      price: "/sq ft",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Easy Installation", "Modular Design", "Slip-Resistant"],
-      description: "Premium gym solutions with versatile interlocking tiles for custom gym layouts and easy replacement."
+      name: "Rubber Roll Tile - Heavy Duty Flooring",
+      category: "rolls",
+      price: "/each",
+      image: roll1,
+      specs: ["Sound insulation", "impact protection", "6mm, 10mm, 15mm thickness"],
+      description: "Heavy-duty black rubber roll tile with anti-slip surface, ideal for gym and industrial flooring."
     },
     {
       id: 3,
-      name: "Crash Mat",
+      name: "Custom Yoga Mat 2X6",
       category: "mats",
       price: "/each",
-      image: mat1,
-      specs: ["High Quality", "Excellent Shock Absorption", "Non-Tearing Material"],
-      description: "Superior shock absorption Crash Mat with high-quality polyurethane foam. Durable, non-tearing cover ensures safety and longevity for all training levels."
-    
+      image: mat3,
+      specs: ["1 inch thickness", "2X6", "Custom Design/Material"],
+      description: "Custom-built premium yoga mat with thick cushioning, non-slip surface, and high durability for studio and home use."
+
     },
     {
       id: 4,
-      name: "Heavy-Duty Rolls",
-      category: "rolls",
-      price: "/sq ft",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Ultra Durable", "Commercial Grade", "10-Year Warranty"],
-      description: "Premium gym solutions featuring heavy-duty flooring for high-traffic commercial fitness centers."
+      name: "Custom Yoga Mat 2X4",
+      category: "mats",
+      price: "/each",
+      image: mat4,
+      specs: ["Foldable Design", "2X4", "Custom Design/Material"],
+      description: "Custom-built premium yoga mat with thick cushioning, foldable design, non-slip surface, and high durability for studio and home use."
     },
     {
       id: 5,
@@ -70,7 +75,16 @@ const ProductShowcase = () => {
       image: mat2,
       specs: ["Vibrant colors", "Breathable", "Non-Slip Base"],
       description: "Durable and slip-resistant pool mats designed with a breathable, open-grid structure for quick drainage and anti-bacterial protection."
-    }
+    },
+    {
+      id: 7,
+      name: "Crash Mat",
+      category: "mats",
+      price: "/each",
+      image: mat1,
+      specs: ["Shock Absorption", "High Quality", "Non-Tearing Material"],
+      description: "Crash mats designed for safety in gymnastics and martial arts, featuring high-quality, non-tearing material for maximum durability."
+    },
   ];
   
 
