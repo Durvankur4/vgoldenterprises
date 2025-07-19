@@ -4,10 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ProductDetailsModal from "./ProductDetailsModal";
 
+const mat1 = "./images/products/crash-mat-1.jpg";
+const mat2 = "./images/products/pool-mat-2.jpg";
+const tile1 = "./images/products/tile-1.jpg";
+
 const ProductShowcase = () => {
   const [filter, setFilter] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
 
   const products = [
      {
@@ -30,12 +36,13 @@ const ProductShowcase = () => {
     },
     {
       id: 3,
-      name: "Competition Mats",
+      name: "Crash Mat",
       category: "mats",
       price: "/each",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Competition Grade", "High Density", "Non-Slip Base"],
-      description: "Premium gym solutions including professional-grade mats designed for serious training and competitions."
+      image: mat1,
+      specs: ["High Quality", "Excellent Shock Absorption", "Non-Tearing Material"],
+      description: "Superior shock absorption Crash Mat with high-quality polyurethane foam. Durable, non-tearing cover ensures safety and longevity for all training levels."
+    
     },
     {
       id: 4,
@@ -48,21 +55,21 @@ const ProductShowcase = () => {
     },
     {
       id: 5,
-      name: "Puzzle Floor Tiles",
+      name: "10mm Rubber tile",
       category: "tiles",
       price: "/sq ft",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Quick Assembly", "Lightweight", "Color Options"],
-      description: "Premium gym solutions with affordable puzzle tiles perfect for home gyms and small spaces."
+      image: tile1,
+      specs: ["Quick Assembly", "Durable", "Color Options"],
+      description: "Premium gym solutions with affordable rubber tiles perfect for home gyms and small spaces."
     },
     {
       id: 6,
-      name: "Yoga & Stretching Mats",
+      name: "Pool Mat",
       category: "mats",
-      price: "₹/each",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-      specs: ["Extra Thick", "Non-Toxic", "Easy Clean"],
-      description: "Premium gym solutions including cushioned mats designed for yoga, stretching, and floor exercises."
+      price: "/each",
+      image: mat2,
+      specs: ["Vibrant colors", "Breathable", "Non-Slip Base"],
+      description: "Durable and slip-resistant pool mats designed with a breathable, open-grid structure for quick drainage and anti-bacterial protection."
     }
   ];
   
