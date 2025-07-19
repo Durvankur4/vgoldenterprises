@@ -31,215 +31,221 @@ const products: Product[] = [
   { id: 7, name: "Custom Yoga Mat 2X4", category: "mats", image: mat4, description: "Durable yoga mat in custom sizes.", specs: ["durable", "custom sizes", "non-slip"] }
 ];
 
-const categories = [
-  { key: "all", label: "All" },
-  { key: "tiles", label: "Tiles" },
-  { key: "mats", label: "Mats" },
-  { key: "rolls", label: "Rolls" }
-];
-
 const ProductShowcase = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [filter, setFilter] = useState("all");
-  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-  const [zoomed, setZoomed] = useState(false);
-  const filteredProducts = filter === "all"
-    ? products
-    : products.filter(p => p.category === filter);
-  const currentIndex = selectedProduct
-    ? filteredProducts.findIndex((p) => p.id === selectedProduct.id)
-    : -1;
-  
-  const handleCardClick = (product: Product) => {
-    setSelectedProduct(product);
-    setSelectedCardId(product.id);
-  };
+  const [zoomedImage, setZoomedImage] = useState(false);
+
+  const filteredProducts = products; // currently showing all
+  const currentIndex = selectedProduct ? filteredProducts.findIndex(p => p.id === selectedProduct.id) : -1;
 
   const goNext = () => {
     if (selectedProduct && currentIndex < filteredProducts.length - 1) {
-      const next = filteredProducts[currentIndex + 1];
-      setSelectedProduct(next);
-      setSelectedCardId(next.id);
+      setSelectedProduct(filteredProducts[currentIndex + 1]);
     }
   };
 
   const goPrev = () => {
     if (selectedProduct && currentIndex > 0) {
-      const prev = filteredProducts[currentIndex - 1];
-      setSelectedProduct(prev);
-      setSelectedCardId(prev.id);
-    }
-  };
-
-  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).id === "products-container") {
-      setSelectedCardId(null);
-      setSelectedProduct(null);
+      setSelectedProduct(filteredProducts[currentIndex - 1]);
     }
   };
 
   const handleContactScroll = () => {
-    const el = document.getElementById("contact");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById("contact");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
     setSelectedProduct(null);
   };
 
   return (
-    <section id="products" className="py-12 sm:py-16 lg:py-20 bg-gray-100" onClick={handleBackgroundClick}>
-      <div className="container mx-auto px-6 sm:px-12 lg:px-32">
-        <div className="text-center mb-6 sm:mb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-3">
+    <section id="products" className="relative bg-gray-100 py-12 sm:py-16 lg:py-20">
+      <div className="max-w-6xl mx-auto px-6 sm:px-10">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
             Explore Our Gym Products
           </h2>
-          <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto mb-6">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             High-performance flooring, mats, and accessories tailored to every workout space.
           </p>
-
-          {/* Filters below the paragraph */}
-          <div className="flex justify-center flex-wrap gap-2 mb-2">
-            {categories.map(cat => (
-              <button
-                key={cat.key}
-                onClick={() => {
-                  setFilter(cat.key);
-                  setSelectedCardId(null);
-                  setSelectedProduct(null);
-                }}
-                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all 
-                  ${filter === cat.key
-                  ? "bg-white text-teal-600 shadow"
-                  : "bg-teal-600 text-white hover:bg-teal-700"}`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Cards */}
-        <div id="products-container" className="flex flex-wrap justify-center gap-4 sm:gap-4 -mx-2">
-          {filteredProducts.map((product) => {
-            const selected = selectedCardId === product.id;
-            return (
-              <div
+        {/* Horizontal scroll only on mobile */}
+        <div className="block md:hidden relative">
+          <div className="overflow-x-auto flex-nowrap snap-x snap-mandatory flex gap-4 pb-6 pl-4 pr-1 -mx-4">
+            {products.map((product) => (
+              <Card
                 key={product.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCardClick(product);
-                }}
-                className={`transition-all duration-300 cursor-pointer rounded-xl border border-gray-200 bg-white 
-                  ${selected ? "w-[350px] shadow-xl scale-105 ring-2 ring-teal-600" : "w-[260px]"} 
-                  hover:shadow-md`}
+                className="min-w-[85vw] relative snap-center flex-shrink-0 bg-white rounded-xl border border-gray-200"
               >
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-44 md:h-48 object-cover rounded-t-xl"
-                  loading="lazy"
+                  className="w-full h-44 object-cover rounded-t-xl"
                 />
-                <CardContent className="p-4 text-left">
-                  <h3 className="text-lg font-bold text-black mb-2">{product.name}</h3>
+                <CardContent className="p-4 text-left pb-20">
+                  <h3 className="text-lg font-semibold text-black mb-1">
+                    {product.name}
+                  </h3>
                   <p className="text-sm text-gray-600 mb-3">{product.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {product.specs.map((spec, index) => (
+                  <div className="flex flex-wrap gap-2">
+                    {product.specs.map((s, i) => (
                       <span
-                        key={index}
-                        className="bg-white border border-teal-600 text-teal-700 text-xs px-2 py-1 rounded"
+                        key={i}
+                        className="bg-white text-teal-600 border border-teal-600 text-xs px-2 py-1 rounded"
                       >
-                        {spec}
+                        {s}
                       </span>
                     ))}
                   </div>
-                  <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full">
+                </CardContent>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <Button
+                    className="w-full bg-teal-600 text-white hover:bg-teal-700"
+                    onClick={() => setSelectedProduct(product)}
+                  >
                     View Details
                   </Button>
-                </CardContent>
-              </div>
-            );
-          })}
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
 
-        {/* Arrows Only When Modal Is Open */}
-        {selectedProduct && (
-          <>
-            {/* Left Arrow */}
-            {currentIndex > 0 && (
-              <button
-                aria-label="Prev product"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goPrev();
-                }}
-                className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white bg-opacity-80 rounded-full shadow border hover:bg-teal-600 hover:text-white text-2xl transition-all"
-              >
-                <MdArrowBackIosNew />
-              </button>
-            )}
-            {/* Right Arrow */}
-            {currentIndex < filteredProducts.length - 1 && (
-              <button
-                aria-label="Next product"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goNext();
-                }}
-                className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white bg-opacity-80 rounded-full shadow border hover:bg-teal-600 hover:text-white text-2xl transition-all"
-              >
-                <MdArrowForwardIos />
-              </button>
-            )}
-            {/* Modal */}
-            <div
-              className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center px-4"
-              onClick={() => setSelectedProduct(null)}
+        {/* Desktop cards in loose wrap */}
+        <div className="hidden md:flex md:flex-wrap md:justify-center gap-6">
+          {products.map((product) => (
+            <Card
+              key={product.id}
+              className="w-[270px] relative bg-white rounded-xl border border-gray-200"
             >
-              <div
-                className="relative w-full max-w-lg md:max-w-3xl bg-white rounded-lg overflow-hidden flex flex-col md:flex-row"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Close */}
-                <button
-                  onClick={() => setSelectedProduct(null)}
-                  className="absolute top-3 right-3 text-gray-700 bg-white bg-opacity-80 rounded-full shadow-md p-1 text-xl"
-                  aria-label="Close"
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-44 object-cover rounded-t-xl"
+              />
+              <CardContent className="p-4 text-left pb-20">
+                <h3 className="text-lg font-semibold text-black mb-1">
+                  {product.name}
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {product.specs.map((s, i) => (
+                    <span
+                      key={i}
+                      className="bg-white text-teal-600 border border-teal-600 text-xs px-2 py-1 rounded"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+              <div className="absolute bottom-4 left-4 right-4">
+                <Button
+                  className="w-full bg-teal-600 text-white hover:bg-teal-700"
+                  onClick={() => setSelectedProduct(product)}
                 >
-                  &times;
-                </button>
+                  View Details
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
 
-                {/* Image */}
-                <div className="md:w-1/2 bg-black flex items-center justify-center">
-                  <img
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="w-full h-full object-contain max-h-[350px]"
-                    loading="lazy"
-                  />
-                </div>
+      {/* Pop-up Modal */}
+      {selectedProduct && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center px-4"
+          onClick={() => setSelectedProduct(null)}
+        >
+          {/* Go Left Button */}
+          {currentIndex > 0 && (
+            <button
+              aria-label="Prev"
+              onClick={(e) => {
+                e.stopPropagation();
+                goPrev();
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white rounded-full text-teal-600 shadow hover:bg-teal-600 hover:text-white"
+            >
+              <MdArrowBackIosNew size={22} />
+            </button>
+          )}
 
-                {/* Details */}
-                <div className="p-6 md:w-1/2 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-black mb-4">
-                      {selectedProduct.name}
-                    </h3>
-                    <p className="text-sm text-gray-700 mb-3">
-                      {selectedProduct.description}
-                    </p>
-                    <ul className="text-sm list-disc pl-4 text-gray-600 space-y-1 mb-6">
-                      {selectedProduct.specs.map((s, i) => (
-                        <li key={i}>{s}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <Button onClick={handleContactScroll} className="w-full bg-black text-white hover:bg-gray-900">
-                    Contact Us
-                  </Button>
-                </div>
+          {/* Go Right Button */}
+          {currentIndex < products.length - 1 && (
+            <button
+              aria-label="Next"
+              onClick={(e) => {
+                e.stopPropagation();
+                goNext();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white rounded-full text-teal-600 shadow hover:bg-teal-600 hover:text-white"
+            >
+              <MdArrowForwardIos size={22} />
+            </button>
+          )}
+
+          {/* Modal Content */}
+          <div
+            className="bg-white rounded-xl shadow-xl max-w-[90vw] w-full md:w-[800px] max-h-[90vh] overflow-hidden flex flex-col md:flex-row"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="w-full md:w-1/2 relative group cursor-pointer bg-black"
+              onClick={() => setZoomedImage(true)}
+            >
+              <img
+                src={selectedProduct.image}
+                alt={selectedProduct.name}
+                className="w-full h-full object-contain max-h-[400px] bg-white"
+              />
+              <div className="absolute inset-0 flex items-center justify-center group-hover:bg-black group-hover:bg-opacity-50 transition-all">
+                <span className="text-white text-sm opacity-0 group-hover:opacity-100 font-medium">View Image</span>
               </div>
             </div>
-          </>
-        )}
-      </div>
+            <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-black mb-2">{selectedProduct.name}</h2>
+                <p className="text-sm text-gray-700 mb-3">{selectedProduct.description}</p>
+                <ul className="text-sm list-disc list-inside text-gray-600 space-y-1 mb-5">
+                  {selectedProduct.specs.map((spec, index) => (
+                    <li key={index}>{spec}</li>
+                  ))}
+                </ul>
+              </div>
+              <Button
+                className="bg-black text-white w-full mt-2 hover:bg-gray-900"
+                onClick={handleContactScroll}
+              >
+                Contact Us
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Zoom Modal */}
+      {zoomedImage && selectedProduct && (
+        <div
+          className="fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4"
+          onClick={() => setZoomedImage(false)}
+        >
+          <div className="relative max-w-[90vw] w-full max-h-[90vh]">
+            <button
+              className="absolute top-4 right-4 text-white text-3xl bg-white bg-opacity-20 rounded-full p-2"
+              onClick={() => setZoomedImage(false)}
+              aria-label="Close Zoom"
+            >
+              &times;
+            </button>
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="w-full h-auto object-contain max-h-[90vh]"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };
