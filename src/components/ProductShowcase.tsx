@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ProductDetailsModal from "./ProductDetailsModal";
 
@@ -38,63 +38,125 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section className="px-6 py-12 bg-white">
-      <div className="flex justify-center gap-4 mb-10">
-        { ["all","rolls","mats","tiles"].map(cat => (
+    <section className="py-12 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-center gap-4 mb-8">
+          { ["all","rolls","mats","tiles"].map(cat => (
             <Button
               key={cat}
               variant={filter === cat ? "default" : "outline"}
               className="capitalize transition-transform hover:scale-105"
               onClick={() => setFilter(cat)}
             >{cat}</Button>
-        )) }
+          )) }
+        </div>
+
+        {/* Mobile Carousel */}
+        <div className="block lg:hidden overflow-x-auto -mx-4 px-4 pb-4">
+          <div className="flex space-x-6 w-max">
+            { filtered.map(prod => (
+              <Card
+                key={prod.id}
+                className="min-w-[260px] max-w-[260px] flex-shrink-0 group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
+                onClick={() => openModal(prod)}
+              >
+                <CardContent className="p-0">
+                  <div className="relative h-40 overflow-hidden rounded-t-lg">
+                    <img
+                      src={prod.image}
+                      alt={prod.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg text-blue-900 mb-2">{prod.name}</h3>
+                    <p className="text-blue-600 text-sm mb-4">{prod.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      { prod.specs.map((s,i) => (
+                        <Badge key={i} variant="outline" className="capitalize">
+                          {s}
+                        </Badge>
+                      )) }
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        onClick={(e) => { e.stopPropagation(); openModal(prod); }}
+                        size="sm"
+                        className="bg-teal-600 hover:bg-teal-700 text-white w-full"
+                      >
+                        View Details
+                      </Button>
+                      <Link to="/contact" onClick={e => e.stopPropagation()}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white w-full"
+                        >
+                          Get Quote
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )) }
+          </div>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          { filtered.map(prod => (
+            <Card
+              key={prod.id}
+              className="group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
+              onClick={() => openModal(prod)}
+            >
+              <CardContent className="p-0">
+                <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <img
+                    src={prod.image}
+                    alt={prod.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-xl text-blue-900 mb-2">{prod.name}</h3>
+                  <p className="text-blue-600 text-sm mb-4">{prod.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    { prod.specs.map((s,i) => (
+                      <Badge key={i} variant="outline" className="capitalize">
+                        {s}
+                      </Badge>
+                    )) }
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-3">
+                    <Button
+                      onClick={(e) => { e.stopPropagation(); openModal(prod); }}
+                      size="sm"
+                      className="w-full lg:w-1/2 bg-teal-600 hover:bg-teal-700 text-white"
+                    >
+                      View Details
+                    </Button>
+                    <Link to="/contact" onClick={e => e.stopPropagation()} className="w-full lg:w-1/2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white w-full"
+                      >
+                        Get Quote
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )) }
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        { filtered.map(prod => (
-          <Card
-            key={prod.id}
-            className="max-w-sm mx-auto h-full space-y-4 transition-transform hover:shadow-2xl hover:-translate-y-2"
-            onClick={() => openModal(prod)}
-          >
-            <div className="flex justify-center bg-gray-100 p-6 rounded-t-lg">
-              <img
-                src={prod.image}
-                alt={prod.name}
-                className="h-56 object-contain"
-              />
-            </div>
-            <CardHeader className="pt-2">
-              <CardTitle className="text-center text-xl font-bold text-gray-800">
-                {prod.name}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-sm text-gray-600 mb-4">
-                {prod.description}
-              </p>
-              <div className="flex justify-center flex-wrap gap-2 mb-4">
-                { prod.specs.map((s,i) => (
-                    <Badge key={i} variant="outline" className="capitalize">
-                      {s}
-                    </Badge>
-                )) }
-              </div>
-              <div className="flex justify-center gap-4">
-                <Button size="sm" variant="ghost" className="px-4 py-2 transition-all hover:bg-accent hover:text-white" onClick={(e) => { e.stopPropagation(); openModal(prod); }}>
-                  View Details
-                </Button>
-                <Link to="/contact" onClick={e => e.stopPropagation()}>
-                  <Button size="sm" className="px-4 py-2 bg-accent text-white transition-colors hover:bg-accent-dark">
-                    Get Quote
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        )) }
-      </div>
-
+      {/* Modal */}
       { selected && (
         <ProductDetailsModal
           isOpen={isOpen}

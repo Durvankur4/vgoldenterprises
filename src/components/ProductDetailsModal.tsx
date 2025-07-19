@@ -10,7 +10,7 @@ export default function ProductDetailsModal({ isOpen, onClose, product }) {
   if (!product) return null;
 
   return (
-    <>  
+    <>
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogOverlay className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm" />
         <DialogContent className="relative mx-auto mt-24 max-w-4xl w-11/12 bg-white rounded-xl p-8">
@@ -28,7 +28,7 @@ export default function ProductDetailsModal({ isOpen, onClose, product }) {
               />
             </div>
             <div className="flex-1 space-y-6">
-              <h3 className="text-3xl font-extrabold text-gray-900">{product.name}</h3>
+              <h3 className="text-3xl font-extrabold text-blue-900">{product.name}</h3>
               <p className="text-gray-700 leading-relaxed">{product.description}</p>
               <div className="flex flex-wrap gap-3">
                 {product.specs.map((s,i) => (
@@ -37,13 +37,17 @@ export default function ProductDetailsModal({ isOpen, onClose, product }) {
                   </Badge>
                 ))}
               </div>
-              <div className="mt-8 flex gap-4">
+              <div className="mt-8 flex flex-col lg:flex-row gap-4">
                 <Link to="/contact">
-                  <Button className="px-6 py-3 bg-accent text-white font-semibold transition-transform hover:scale-105">
+                  <Button className="w-full lg:w-auto px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold transition-transform hover:scale-105">
                     Get Quote
                   </Button>
                 </Link>
-                <Button variant="outline" className="px-6 py-3 transition-colors hover:bg-gray-100" onClick={onClose}>
+                <Button
+                  variant="outline"
+                  className="w-full lg:w-auto px-6 py-3 border-blue-600 text-blue-600 hover:bg-gray-100"
+                  onClick={onClose}
+                >
                   Close
                 </Button>
               </div>
@@ -52,7 +56,6 @@ export default function ProductDetailsModal({ isOpen, onClose, product }) {
         </DialogContent>
       </Dialog>
 
-      {/* Zoom Lightbox */}
       <Dialog open={zoom} onOpenChange={setZoom}>
         <DialogOverlay className="fixed inset-0 bg-black bg-opacity-80" />
         <DialogContent className="relative mx-auto my-16 max-w-3xl w-10/12 bg-transparent p-0">
