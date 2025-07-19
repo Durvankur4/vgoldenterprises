@@ -10,6 +10,7 @@ import img4 from "@/images/website/commercial-gym-floor-upgrade.jpg";
 import img5 from "@/images/website/home-gym-premium-installation.jpg";
 import img6 from "@/images/website/interlocking-tiles-installation-colored.jpg";
 import img7 from "@/images/website/playground-EPDM-flooring.jpg";
+import img8 from "@/images/website/tennis-court.jpg";
 
 const projects = [
   {
@@ -54,6 +55,12 @@ const projects = [
     image: img7,
     description: "High-quality EPDM flooring for outdoor playground areas",
   },
+  {
+    id: 8,
+    title: "Tennis Court Construction",
+    image: img8,
+    description: "Premium gym solutions for professional tennis courts",
+  }
 ];
 
 const FeaturedProjects = () => {
