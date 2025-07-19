@@ -50,7 +50,7 @@ const ProductShowcase = () => {
       category: "rolls",
       price: "/each",
       image: roll1,
-      specs: ["Sound insulation", "Impact protection", "2,4,5,6,10,12 mm thickness"],
+      specs: ["Sound insulation", "Impact protection"],
       description:
         "Heavy-duty black rubber roll tile with anti-slip surface, ideal for gym and industrial flooring."
     },
@@ -127,15 +127,15 @@ const ProductShowcase = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.map((product) => (
-          <Card key={product.id} className="hover:shadow-xl transition duration-300">
+          <Card key={product.id} className="hover:shadow-lg transition">
             <button
               onClick={() => handleViewDetails(product)}
-              className="overflow-hidden rounded-t-lg"
+              className="overflow-hidden rounded-t-xl bg-white"
             >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover transform hover:scale-105 transition duration-300"
+                className="w-full h-48 object-contain p-4 transition duration-300"
               />
             </button>
             <CardHeader>
