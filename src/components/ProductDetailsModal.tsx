@@ -10,55 +10,60 @@ export default function ProductDetailsModal({ isOpen, onClose, product }) {
   if (!product) return null;
 
   return (
-    <>
+    <>  
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50" />
-        <DialogContent className="relative mx-auto mt-20 max-w-3xl w-11/12 bg-white rounded-lg p-6">
+        <DialogOverlay className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm" />
+        <DialogContent className="relative mx-auto mt-24 max-w-4xl w-11/12 bg-white rounded-xl p-8">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors text-2xl"
           >×</button>
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 cursor-zoom-in" onClick={() => setZoom(true)}>
+
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 cursor-pointer" onClick={() => setZoom(true)}>
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-64 object-contain rounded-lg"
+                className="w-full h-80 object-contain rounded-lg border border-gray-200"
               />
             </div>
-            <div className="flex-1 space-y-4">
-              <h3 className="text-2xl font-bold">{product.name}</h3>
-              <p className="text-gray-700">{product.description}</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="flex-1 space-y-6">
+              <h3 className="text-3xl font-extrabold text-gray-900">{product.name}</h3>
+              <p className="text-gray-700 leading-relaxed">{product.description}</p>
+              <div className="flex flex-wrap gap-3">
                 {product.specs.map((s,i) => (
-                  <Badge key={i} variant="secondary" className="capitalize">
+                  <Badge key={i} variant="outline" className="capitalize">
                     {s}
                   </Badge>
                 ))}
               </div>
-              <div className="mt-6 flex gap-4">
+              <div className="mt-8 flex gap-4">
                 <Link to="/contact">
-                  <Button>Get Quote</Button>
+                  <Button className="px-6 py-3 bg-accent text-white font-semibold transition-transform hover:scale-105">
+                    Get Quote
+                  </Button>
                 </Link>
-                <Button variant="outline" onClick={onClose}>Close</Button>
+                <Button variant="outline" className="px-6 py-3 transition-colors hover:bg-gray-100" onClick={onClose}>
+                  Close
+                </Button>
               </div>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Zoom Lightbox Modal */}
+      {/* Zoom Lightbox */}
       <Dialog open={zoom} onOpenChange={setZoom}>
-        <DialogOverlay className="fixed inset-0 bg-black bg-opacity-75" />
-        <DialogContent className="relative mx-auto my-20 max-w-xl w-10/12 bg-transparent p-0">
+        <DialogOverlay className="fixed inset-0 bg-black bg-opacity-80" />
+        <DialogContent className="relative mx-auto my-16 max-w-3xl w-10/12 bg-transparent p-0">
           <button
             onClick={() => setZoom(false)}
-            className="absolute top-2 right-2 text-white text-2xl"
+            className="absolute top-2 right-2 text-white text-3xl z-10"
           >×</button>
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-auto object-contain"
+            className="w-full h-auto object-contain rounded"
           />
         </DialogContent>
       </Dialog>
