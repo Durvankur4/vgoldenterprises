@@ -130,14 +130,17 @@ export default function ProductShowcase() {
                 <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl" />
                 <CardContent className="p-4 pb-20 text-left">
                   <h3 className="text-lg font-bold text-black mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-700 mb-2">{product.description}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {product.specs.map((s, i) => (
-                      <span key={i} className="text-[13px] font-bold text-black opacity-60">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+  <p className="text-sm text-gray-700 mb-2">{product.description}</p>
+  <div className="flex flex-wrap gap-2 mb-2">
+    {product.specs.map((s, i) => (
+      <span
+        key={i}
+        className="text-[13px] font-bold rounded-full bg-black/60 text-white opacity-90 px-3 py-1 transition"
+      >
+        {s}
+      </span>
+    ))}
+  </div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <Button
                       className="w-full bg-teal-600 text-white hover:bg-teal-700"
@@ -261,30 +264,31 @@ export default function ProductShowcase() {
 
           {/* Zoom Modal */}
           {zoomedImage && (
-            <div
-              className={`fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-200 ${
-                zoomFadeOut ? 'opacity-0' : 'opacity-100'
-              }`}
-              onClick={handleZoomClose}
-            >
-              <div className="relative w-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-                {/* Cross absolutely positioned in the image box, with enough padding */}
-                <button
-                  className="absolute top-4 right-4 text-white text-3xl bg-white bg-opacity-80 rounded-full p-2 z-30"
-                  onClick={e => {e.stopPropagation(); handleZoomClose();}}
-                  aria-label="Close Zoom"
-                >
-                  &times;
-                </button>
-                <img
-                  src={selectedProduct.image}
-                  alt={selectedProduct.name}
-                  className="w-full h-auto max-h-[85vh] object-contain mx-auto"
-                  style={{ background: "#fff" }}
-                />
-              </div>
-            </div>
-          )}
+  <div
+    className={`fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-200 ${
+      zoomFadeOut ? 'opacity-0' : 'opacity-100'
+    }`}
+    onClick={handleZoomClose}
+  >
+    <div className="relative w-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+      {/* White × over a black, slight-opacity background inside image area */}
+      <button
+        className="absolute top-4 right-4 z-30 text-3xl text-white bg-black bg-opacity-60 rounded-full p-2 hover:bg-opacity-80 focus:bg-opacity-80 transition"
+        onClick={e => {e.stopPropagation(); handleZoomClose();}}
+        aria-label="Close Zoom"
+      >
+        &times;
+      </button>
+      <img
+        src={selectedProduct.image}
+        alt={selectedProduct.name}
+        className="w-full h-auto max-h-[85vh] object-contain mx-auto"
+        style={{ background: "#fff" }}
+      />
+    </div>
+  </div>
+)}
+
         </div>
       )}
     </section>
