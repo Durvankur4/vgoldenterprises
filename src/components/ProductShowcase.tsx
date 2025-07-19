@@ -1,11 +1,7 @@
-'use client';
-
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
-
-// Product Images
 import mat1 from "../images/products/crash-mat-1.jpg";
 import mat2 from "../images/products/pool-mat-1.jpg";
 import mat3 from "../images/products/custom-yoga-mat-1.jpg";
@@ -24,6 +20,7 @@ export interface Product {
 }
 
 const products: Product[] = [
+  // ...same as before...
   { id: 1, name: "Gym Foam Roller", category: "rolls", image: roller1, description: "High-quality rubber roller for comfort and durability.", specs: ["comfortable", "custom thickness", "easy maintenance"] },
   { id: 2, name: "Rubber Roll Tile", category: "rolls", image: roll1, description: "Heavy-duty anti-slip roll tile for gym and industrial flooring.", specs: ["sound insulation", "impact protection", "multi-thickness (2,4,5,6,8,10,12mm)"] },
   { id: 3, name: "Custom Yoga Mat 2X6", category: "mats", image: mat3, description: "Eco-friendly non-slip yoga mat with custom prints.", specs: ["eco-friendly", "non-slip", "custom"] },
@@ -37,13 +34,15 @@ const categories = [
   { key: "all", label: "All" },
   { key: "tiles", label: "Tiles" },
   { key: "mats", label: "Mats" },
-  { key: "rolls", label: "Rolls" },
+  { key: "rolls", label: "Rolls" }
 ];
 
 export default function ProductShowcase() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [zoomedImage, setZoomedImage] = useState(false);
   const [filter, setFilter] = useState("all");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [zoomFadeOut, setZoomFadeOut] = useState(false);
 
   const filteredProducts =
     filter === "all"
@@ -53,6 +52,9 @@ export default function ProductShowcase() {
   const currentIndex = selectedProduct
     ? filteredProducts.findIndex((p) => p.id === selectedProduct.id)
     : -1;
+
+  // For smooth horizontal scrolling on mobile, set scroll behavior directly on effect:
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
 
   const goNext = () => {
     if (currentIndex < filteredProducts.length - 1) {
@@ -66,17 +68,28 @@ export default function ProductShowcase() {
     }
   };
 
+  // Smooth scroll to contact by using native smooth behavior
   const handleContactScroll = () => {
     const section = document.getElementById("contact");
     if (section) section.scrollIntoView({ behavior: "smooth" });
-    setSelectedProduct(null);
-    setZoomedImage(false);
+    setTimeout(() => {
+      setSelectedProduct(null);
+      setZoomedImage(false);
+    }, 300); // allow scroll to finish, then close modal
+  };
+
+  // For smooth fade out on zoom close
+  const handleZoomClose = () => {
+    setZoomFadeOut(true);
+    setTimeout(() => {
+      setZoomedImage(false);
+      setZoomFadeOut(false);
+    }, 210); // match transition duration
   };
 
   return (
     <section id="products" className="relative bg-gray-100 py-12 sm:py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-
         <div className="text-center mb-6">
           <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
             Explore Our Gym Products
@@ -84,7 +97,6 @@ export default function ProductShowcase() {
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             High-performance flooring, mats, and accessories tailored to every workout space.
           </p>
-
           {/* Filters */}
           <div className="flex justify-center flex-wrap gap-2 mt-6">
             {categories.map((cat) => (
@@ -107,9 +119,9 @@ export default function ProductShowcase() {
           </div>
         </div>
 
-        {/* Mobile - Horizontal Scroll */}
-        <div className="block md:hidden overflow-x-auto pb-4">
-          <div className="flex gap-2 px-2 w-max">
+        {/* Mobile - Horizontal Scroll with smooth behavior */}
+        <div className="block md:hidden overflow-x-auto pb-4" style={{ scrollBehavior: "smooth" }}>
+          <div className="flex gap-2 px-2 w-max" ref={mobileScrollRef}>
             {filteredProducts.map((product) => (
               <Card
                 key={product.id}
@@ -121,7 +133,7 @@ export default function ProductShowcase() {
                   <p className="text-sm text-gray-700 mb-2">{product.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {product.specs.map((s, i) => (
-                      <span key={i} className="text-xs font-bold text-black opacity-70">
+                      <span key={i} className="text-[13px] font-bold text-black opacity-60">
                         {s}
                       </span>
                     ))}
@@ -129,7 +141,10 @@ export default function ProductShowcase() {
                   <div className="absolute bottom-4 left-4 right-4">
                     <Button
                       className="w-full bg-teal-600 text-white hover:bg-teal-700"
-                      onClick={() => setSelectedProduct(product)}
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setModalOpen(true);
+                      }}
                     >
                       View Details
                     </Button>
@@ -141,7 +156,7 @@ export default function ProductShowcase() {
         </div>
 
         {/* Desktop - Gridless Wrap */}
-        <div className="hidden md:flex flex-wrap justify-center gap-4">
+        <div className="hidden md:flex flex-wrap justify-center gap-2">
           {filteredProducts.map((product) => (
             <Card
               key={product.id}
@@ -153,7 +168,7 @@ export default function ProductShowcase() {
                 <p className="text-sm text-gray-700 mb-2">{product.description}</p>
                 <div className="flex flex-wrap gap-1">
                   {product.specs.map((s, i) => (
-                    <span key={i} className="text-xs font-bold text-black opacity-70">
+                    <span key={i} className="text-[13px] font-bold text-black opacity-60">
                       {s}
                     </span>
                   ))}
@@ -161,7 +176,10 @@ export default function ProductShowcase() {
                 <div className="absolute bottom-4 left-4 right-4">
                   <Button
                     className="w-full bg-teal-600 text-white hover:bg-teal-700"
-                    onClick={() => setSelectedProduct(product)}
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setModalOpen(true);
+                    }}
                   >
                     View Details
                   </Button>
@@ -175,52 +193,38 @@ export default function ProductShowcase() {
       {/* Modal */}
       {selectedProduct && (
         <div
-          className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center px-4"
+          className={"fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center px-4 transition-opacity duration-200"}
+          style={{ opacity: modalOpen ? 1 : 0, pointerEvents: modalOpen ? 'auto' : 'none' }}
+          onAnimationEnd={() => !modalOpen && setSelectedProduct(null)}
           onClick={() => setSelectedProduct(null)}
         >
-          {/* Go Left */}
           {currentIndex > 0 && (
             <button
               aria-label="Prev"
-              onClick={(e) => {
-                e.stopPropagation();
-                goPrev();
-              }}
+              onClick={e => { e.stopPropagation(); goPrev(); }}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white rounded-full text-teal-600 shadow hover:bg-teal-600 hover:text-white"
             >
               <MdArrowBackIosNew size={22} />
             </button>
           )}
-
-          {/* Go Right */}
           {currentIndex < filteredProducts.length - 1 && (
             <button
               aria-label="Next"
-              onClick={(e) => {
-                e.stopPropagation();
-                goNext();
-              }}
+              onClick={e => { e.stopPropagation(); goNext(); }}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 bg-white rounded-full text-teal-600 shadow hover:bg-teal-600 hover:text-white"
             >
               <MdArrowForwardIos size={22} />
             </button>
           )}
-
-          {/* Modal Card */}
           <div
-            className="bg-white rounded-xl shadow-xl max-w-[90vw] w-full md:w-[800px] max-h-[90vh] overflow-hidden flex flex-col md:flex-row relative"
-            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-xl shadow-xl max-w-[90vw] w-full md:w-[800px] max-h-[90vh] overflow-hidden flex flex-col md:flex-row relative transition-all duration-200"
+            onClick={e => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               aria-label="Close"
               className="absolute top-4 right-4 z-20 text-2xl bg-white hover:bg-gray-100 rounded-full px-2 shadow"
               onClick={() => setSelectedProduct(null)}
-            >
-              ×
-            </button>
-
-            {/* Image Section */}
+            >×</button>
             <div
               className="w-full md:w-1/2 relative group cursor-pointer bg-black"
               onClick={() => setZoomedImage(true)}
@@ -236,15 +240,13 @@ export default function ProductShowcase() {
                 </span>
               </div>
             </div>
-
-            {/* Details */}
             <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-xl font-bold text-black mb-2">{selectedProduct.name}</h2>
                 <p className="text-sm text-gray-700 mb-3">{selectedProduct.description}</p>
                 <ul className="text-sm list-disc list-inside text-gray-600 space-y-1 mb-5">
                   {selectedProduct.specs.map((spec, index) => (
-                    <li key={index} className="font-bold text-black opacity-70">{spec}</li>
+                    <li key={index} className="font-bold text-black opacity-60">{spec}</li>
                   ))}
                 </ul>
               </div>
@@ -260,13 +262,16 @@ export default function ProductShowcase() {
           {/* Zoom Modal */}
           {zoomedImage && (
             <div
-              className="fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4"
-              onClick={() => setZoomedImage(false)}
+              className={`fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-200 ${
+                zoomFadeOut ? 'opacity-0' : 'opacity-100'
+              }`}
+              onClick={handleZoomClose}
             >
-              <div className="relative w-full max-w-[90vw] max-h-[90vh]">
+              <div className="relative w-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                {/* Cross absolutely positioned in the image box, with enough padding */}
                 <button
-                  className="absolute top-4 right-4 text-white text-3xl bg-white bg-opacity-80 rounded-full p-2"
-                  onClick={() => setZoomedImage(false)}
+                  className="absolute top-4 right-4 text-white text-3xl bg-white bg-opacity-80 rounded-full p-2 z-30"
+                  onClick={e => {e.stopPropagation(); handleZoomClose();}}
                   aria-label="Close Zoom"
                 >
                   &times;
@@ -274,7 +279,8 @@ export default function ProductShowcase() {
                 <img
                   src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full h-auto object-contain max-h-[90vh]"
+                  className="w-full h-auto max-h-[85vh] object-contain mx-auto"
+                  style={{ background: "#fff" }}
                 />
               </div>
             </div>
