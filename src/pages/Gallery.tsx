@@ -15,6 +15,9 @@ import img7 from "@/images/gallery/7.jpg";
 import img8 from "@/images/gallery/8.jpg";
 import img9 from "@/images/gallery/9.jpg";
 import img10 from "@/images/gallery/10.jpg";
+import img11 from "@/images/gallery/11.jpg";
+import img12 from "@/images/gallery/12.jpg";  
+import img13 from "@/images/gallery/13.jpg";
 import seat1 from "@/images/gallery/seat-1.jpg";
 
 
@@ -30,6 +33,10 @@ const images = {
   img8,
   img9,
   img10,
+  img11,
+  img12,
+  img13,
+   // Placeholder for additional images
 };
 
 export const Gallery = () => {
