@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
-// ✅ Import images directly so Vite can bundle & hash them
+// ✅ Import images
 import img1 from "@/images/website/army-gym-installation.jpg";
 import img2 from "@/images/website/boutique-studio-flooring.jpg";
 import img3 from "@/images/website/functional-training-zone-install.jpg";
@@ -9,59 +10,56 @@ import img4 from "@/images/website/commercial-gym-floor-upgrade.jpg";
 import img5 from "@/images/website/home-gym-premium-installation.jpg";
 import img6 from "@/images/website/interlocking-tiles-installation-colored.jpg";
 import img7 from "@/images/website/epdm-site-1.jpg";
-import { Link } from "react-router-dom";
+
+const projects = [
+  {
+    id: 1,
+    title: "Army Gym Installation",
+    image: img1,
+    description: "Complete premium gym solutions for military training facility",
+  },
+  {
+    id: 2,
+    title: "Boutique Studio Flooring",
+    image: img2,
+    description: "Premium gym solutions for modern boutique fitness studio",
+  },
+  {
+    id: 3,
+    title: "Functional Training Zone",
+    image: img3,
+    description: "Premium gym solutions for functional training area",
+  },
+  {
+    id: 4,
+    title: "Commercial Gym Floor",
+    image: img4,
+    description: "Large-scale premium gym solutions installation",
+  },
+  {
+    id: 5,
+    title: "Home Gym Installation",
+    image: img5,
+    description: "Premium gym solutions for residential spaces",
+  },
+  {
+    id: 6,
+    title: "Interlocking Tiles Setup",
+    image: img6,
+    description: "Colorful interlocking tiles for versatile training",
+  },
+  {
+    id: 7,
+    title: "EPDM Flooring Installation",
+    image: img7,
+    description: "High-quality EPDM flooring for outdoor playground areas",
+  },
+];
 
 const FeaturedProjects = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Army Gym Installation",
-      image: img1,
-      description: "Complete premium gym solutions for military training facility",
-    },
-    {
-      id: 2,
-      title: "Boutique Studio Flooring",
-      image: img2,
-      description: "Premium gym solutions for modern boutique fitness studio",
-    },
-    {
-      id: 3,
-      title: "Functional Training Zone",
-      image: img3,
-      description: "Premium gym solutions for functional training arsea",
-    },
-    {
-      id: 4,
-      title: "Commercial Gym Floor",
-      image: img4,
-      description: "Large-scale premium gym solutions installation",
-    },
-    {
-      id: 5,
-      title: "Home Gym Installation",
-      image: img5,
-      description: "Premium gym solutions for residential spaces",
-    },
-    {
-      id: 6,
-      title: "Interlocking Tiles Setup",
-      image: img6,
-      description: "Colorful interlocking tiles for versatile training",
-    },
-    {
-      id: 7,
-      title: "EPDM Flooring Installation",
-      image: img7,
-      description: "High-quality EPDM flooring for outdoor playground areas",
-    },
-  ];
-
   const scrollToContact = () => {
     const contactSection = document.querySelector("#contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
+    contactSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -76,13 +74,13 @@ const FeaturedProjects = () => {
           </p>
         </div>
 
-        {/* Mobile & Tablet Scroll */}
+        {/* Mobile/Tablet Scrollable Cards */}
         <div className="block lg:hidden overflow-x-auto -mx-4 px-4 pb-4">
           <div className="flex space-x-4 w-max">
             {projects.map((project) => (
               <Card
                 key={project.id}
-                className="min-w-[260px] max-w-[260px] flex-shrink-0 group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                className="min-w-[260px] max-w-[260px] flex-shrink-0 group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
               >
                 <CardContent className="p-0">
                   <div className="relative h-40 overflow-hidden rounded-t-lg">
@@ -104,7 +102,7 @@ const FeaturedProjects = () => {
                       >
                         Get Similar Solution
                       </Button>
-                      <a href="/gallery" className="w-full">
+                      <Link to="/gallery" className="w-full">
                         <Button
                           variant="outline"
                           size="sm"
@@ -112,7 +110,7 @@ const FeaturedProjects = () => {
                         >
                           Go to Gallery
                         </Button>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
@@ -126,7 +124,7 @@ const FeaturedProjects = () => {
           {projects.map((project) => (
             <Card
               key={project.id}
-              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              className="group hover:shadow-lg transition-transform duration-300 hover:-translate-y-1"
             >
               <CardContent className="p-0">
                 <div className="relative h-48 overflow-hidden rounded-t-lg">
@@ -149,7 +147,6 @@ const FeaturedProjects = () => {
                       Get Similar Solution
                     </Button>
                     <Link to="/gallery" className="w-full lg:w-1/2">
-
                       <Button
                         variant="outline"
                         size="sm"
@@ -165,10 +162,13 @@ const FeaturedProjects = () => {
           ))}
         </div>
 
+        {/* Final CTA Button */}
         <div className="text-center mt-8">
           <Link to="/gallery">
-
-            <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
+            <Button
+              variant="outline"
+              className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+            >
               View Complete Gallery
             </Button>
           </Link>
