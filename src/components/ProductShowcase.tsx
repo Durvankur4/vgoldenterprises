@@ -20,9 +20,8 @@ export interface Product {
 }
 
 const products: Product[] = [
-  // ...same as before...
   { id: 1, name: "Gym Foam Roller", category: "rolls", image: roller1, description: "High-quality rubber roller for comfort and durability.", specs: ["comfortable", "custom thickness", "easy maintenance"] },
-  { id: 2, name: "Rubber Roll Tile", category: "rolls", image: roll1, description: "Heavy-duty anti-slip roll tile for gym and industrial flooring.", specs: ["sound insulation", "impact protection", "multi-thickness (2,4,5,6,8,10,12mm)"] },
+  { id: 2, name: "Rubber Roll Tile", category: "rolls", image: roll1, description: "Heavy-duty anti-slip roll tile for gym and industrial flooring.", specs: ["sound insulation", "impact protection", "multi-thickness (2,4,5,6,8,10,12 mm)"] },
   { id: 3, name: "Custom Yoga Mat 2X6", category: "mats", image: mat3, description: "Eco-friendly non-slip yoga mat with custom prints.", specs: ["eco-friendly", "non-slip", "custom"] },
   { id: 4, name: "Crash Mat", category: "mats", image: mat1, description: "High-density crash mat for functional training and gymnastics.", specs: ["high density foam", "shock absorption"] },
   { id: 5, name: "Poolside Mat", category: "mats", image: mat2, description: "Waterproof anti-fungal mat for wet areas.", specs: ["waterproof", "anti-fungal", "non-slip"] },
@@ -41,7 +40,6 @@ export default function ProductShowcase() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [zoomedImage, setZoomedImage] = useState(false);
   const [filter, setFilter] = useState("all");
-  const [modalOpen, setModalOpen] = useState(false);
   const [zoomFadeOut, setZoomFadeOut] = useState(false);
 
   const filteredProducts =
@@ -130,24 +128,21 @@ export default function ProductShowcase() {
                 <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl" />
                 <CardContent className="p-4 pb-20 text-left">
                   <h3 className="text-lg font-bold text-black mb-2">{product.name}</h3>
-  <p className="text-sm text-gray-700 mb-2">{product.description}</p>
-  <div className="flex flex-wrap gap-2 mb-2">
-    {product.specs.map((s, i) => (
-      <span
-        key={i}
-        className="text-[13px] font-bold rounded-full bg-black/60 text-white opacity-90 px-3 py-1 transition"
-      >
-        {s}
-      </span>
-    ))}
-  </div>
+                  <p className="text-sm text-gray-700 mb-2">{product.description}</p>
+                  <div className="flex flex-wrap gap-3 my-3">
+                    {product.specs.map((s, i) => (
+                      <span
+                        key={i}
+                        className="rounded-full bg-black/60 text-white opacity-90 text-sm font-bold px-3 py-1"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                   <div className="absolute bottom-4 left-4 right-4">
                     <Button
                       className="w-full bg-teal-600 text-white hover:bg-teal-700"
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setModalOpen(true);
-                      }}
+                      onClick={() => setSelectedProduct(product)}
                     >
                       View Details
                     </Button>
@@ -169,9 +164,12 @@ export default function ProductShowcase() {
               <CardContent className="p-4 pb-20 text-left">
                 <h3 className="text-lg font-bold text-black mb-2">{product.name}</h3>
                 <p className="text-sm text-gray-700 mb-2">{product.description}</p>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-3 my-3">
                   {product.specs.map((s, i) => (
-                    <span key={i} className="text-[13px] font-bold text-black opacity-60">
+                    <span
+                      key={i}
+                      className="rounded-full bg-black/60 text-white opacity-90 text-sm font-bold px-3 py-1"
+                    >
                       {s}
                     </span>
                   ))}
@@ -179,10 +177,7 @@ export default function ProductShowcase() {
                 <div className="absolute bottom-4 left-4 right-4">
                   <Button
                     className="w-full bg-teal-600 text-white hover:bg-teal-700"
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setModalOpen(true);
-                    }}
+                    onClick={() => setSelectedProduct(product)}
                   >
                     View Details
                   </Button>
@@ -197,8 +192,7 @@ export default function ProductShowcase() {
       {selectedProduct && (
         <div
           className={"fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center px-4 transition-opacity duration-200"}
-          style={{ opacity: modalOpen ? 1 : 0, pointerEvents: modalOpen ? 'auto' : 'none' }}
-          onAnimationEnd={() => !modalOpen && setSelectedProduct(null)}
+          style={{ opacity: 1, pointerEvents: 'auto' }}
           onClick={() => setSelectedProduct(null)}
         >
           {currentIndex > 0 && (
@@ -264,31 +258,29 @@ export default function ProductShowcase() {
 
           {/* Zoom Modal */}
           {zoomedImage && (
-  <div
-    className={`fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-200 ${
-      zoomFadeOut ? 'opacity-0' : 'opacity-100'
-    }`}
-    onClick={handleZoomClose}
-  >
-    <div className="relative w-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-      {/* White × over a black, slight-opacity background inside image area */}
-      <button
-        className="absolute top-4 right-4 z-30 text-3xl text-white bg-black bg-opacity-60 rounded-full p-2 hover:bg-opacity-80 focus:bg-opacity-80 transition"
-        onClick={e => {e.stopPropagation(); handleZoomClose();}}
-        aria-label="Close Zoom"
-      >
-        &times;
-      </button>
-      <img
-        src={selectedProduct.image}
-        alt={selectedProduct.name}
-        className="w-full h-auto max-h-[85vh] object-contain mx-auto"
-        style={{ background: "#fff" }}
-      />
-    </div>
-  </div>
-)}
-
+            <div
+              className={`fixed inset-0 z-[100] bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-200 ${
+                zoomFadeOut ? 'opacity-0' : 'opacity-100'
+              }`}
+              onClick={handleZoomClose}
+            >
+              <div className="relative w-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                <button
+                  className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-70 rounded-full p-2 z-30"
+                  onClick={e => {e.stopPropagation(); handleZoomClose();}}
+                  aria-label="Close Zoom"
+                >
+                  &times;
+                </button>
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-auto max-h-[85vh] object-contain mx-auto"
+                  style={{ background: "#fff" }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </section>
