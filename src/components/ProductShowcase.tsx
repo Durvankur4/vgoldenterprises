@@ -106,17 +106,19 @@ export default function ProductShowcase() {
         <div className="block md:hidden overflow-x-auto pb-4" style={{ scrollBehavior: 'smooth' }}>
           <div className="flex gap-3 px-2 w-max" ref={mobileScrollRef}>
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="w-[260px] h-[380px] border rounded-xl shadow-sm flex-shrink-0 relative">
-                <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl" />
-                <CardContent className="p-4 pb-20 text-left">
-                  <h3 className="text-lg font-bold mb-2 text-black">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                  <div className="flex flex-wrap mb-3">
-                    {product.specs.map((s, i) => (
-                      <span key={i} className="text-sm mr-[5px] mb-2">{s}</span>
-                    ))}
+              <Card key={product.id} className="w-[260px] h-[380px] border rounded-xl shadow-sm flex-shrink-0 flex flex-col overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl flex-shrink-0" />
+                <CardContent className="p-4 text-left flex flex-col flex-1 overflow-hidden">
+                  <div className="flex-1 overflow-hidden">
+                    <h3 className="text-lg font-bold mb-2 text-black">{product.name}</h3>
+                    <p className="text-sm text-gray-600 mb-2">{product.description}</p>
+                    <div className="flex flex-wrap">
+                      {product.specs.map((s, i) => (
+                        <span key={i} className="text-sm mr-[5px] mb-2">{s}</span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="absolute bottom-4 left-4 right-4">
+                  <div className="pt-3 flex-shrink-0">
                     <Button className="w-full bg-teal-600 text-white hover:bg-teal-700" onClick={() => setSelectedProduct(product)}>
                       View Details
                     </Button>
@@ -130,17 +132,19 @@ export default function ProductShowcase() {
         {/* Desktop Cards */}
         <div className="hidden md:flex flex-wrap justify-center gap-3">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="w-[260px] h-[380px] border rounded-xl shadow-sm flex-shrink-0 relative">
-              <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl" />
-              <CardContent className="p-4 pb-20 text-left">
-                <h3 className="text-lg font-bold mb-2 text-black">{product.name}</h3>
-                <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                <div className="flex flex-wrap mb-3">
-                  {product.specs.map((s, i) => (
-                    <span key={i} className="text-sm mr-[5px] mb-2">{s}</span>
-                  ))}
+            <Card key={product.id} className="w-[260px] h-[380px] border rounded-xl shadow-sm flex-shrink-0 flex flex-col overflow-hidden">
+              <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-xl flex-shrink-0" />
+              <CardContent className="p-4 text-left flex flex-col flex-1 overflow-hidden">
+                <div className="flex-1 overflow-hidden">
+                  <h3 className="text-lg font-bold mb-2 text-black">{product.name}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{product.description}</p>
+                  <div className="flex flex-wrap">
+                    {product.specs.map((s, i) => (
+                      <span key={i} className="text-sm mr-[5px] mb-2">{s}</span>
+                    ))}
+                  </div>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
+                <div className="pt-3 flex-shrink-0">
                   <Button className="w-full bg-teal-600 text-white hover:bg-teal-700" onClick={() => setSelectedProduct(product)}>
                     View Details
                   </Button>
