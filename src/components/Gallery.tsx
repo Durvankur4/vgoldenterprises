@@ -4,7 +4,7 @@ import GalleryFilters from "./gallery/GalleryFilters";
 import GalleryCard from "./gallery/GalleryCard";
 import { galleryProjects, galleryCategories } from "./gallery/galleryData";
 
-const Gallery = () => {
+const GallerySection = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filteredProjects = selectedCategory === "all" 
@@ -42,3 +42,5 @@ const Gallery = () => {
     </section>
     );
   }
+
+export default GallerySection;

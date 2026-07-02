@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
-        "lib": ["dom", "es2015", "esnext"],
+    "lib": ["dom", "es2015", "esnext"],
     "paths": {
       "@/*": ["./src/*"],
       "@images/*": ["./src/images/*"]

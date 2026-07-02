@@ -20,6 +20,8 @@ import img12 from "@/images/gallery/12.jpg";
 import img13 from "@/images/gallery/13.jpg";
 import img14 from "@/images/gallery/14.jpg";
 import img15 from "@/images/gallery/15.jpg";
+import img16 from "@/images/gallery/16.jpeg";
+import img17 from "@/images/gallery/17.jpeg";
 import seat1 from "@/images/gallery/seat-1.jpg";
 
 
@@ -40,7 +42,8 @@ const images = {
   img5,
   img6,
   img7,
-  img8
+  img8,
+  img16,img17
    // Placeholder for additional images
 };
 
